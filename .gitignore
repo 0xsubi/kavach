@@ -1,0 +1,47 @@
+# Dart/Flutter
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+pubspec.lock
+!apps/**/pubspec.lock
+*.g.dart
+*.freezed.dart
+
+# melos
+pubspec_overrides.yaml
+
+# iOS/macOS
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/macos/Pods/
+**/macos/Flutter/ephemeral/
+*.xcuserstate
+xcuserdata/
+
+# Android
+**/android/.gradle/
+**/android/local.properties
+**/android/gradlew
+**/android/gradlew.bat
+*.jks
+*.keystore
+
+# Web / extension
+extension/dist/
+node_modules/
+extension/flutter_popup/build/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Secrets
+*.env
+.env.*

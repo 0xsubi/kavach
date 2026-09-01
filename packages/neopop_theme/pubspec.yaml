@@ -1,0 +1,24 @@
+name: neopop_theme
+description: >
+  Kavach's design-system wrapper around CRED's neopop package: KavachButton,
+  KavachCard, KavachTextField and color tokens, so every Kavach screen
+  (native apps and the browser-extension popup) shares one consistent
+  component set instead of ad hoc NeoPop configuration per screen.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.5.0
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  neopop: ^1.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:

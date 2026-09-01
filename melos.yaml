@@ -1,0 +1,22 @@
+name: kavach
+
+packages:
+  - packages/**
+  - apps/**
+
+command:
+  bootstrap:
+    usePubspecOverrides: true
+
+scripts:
+  test:
+    run: melos exec -- dart test
+    description: Run tests in all packages that have them.
+
+  analyze:
+    run: melos exec -- dart analyze .
+    description: Analyze all packages.
+
+  testvectors:
+    run: dart run tools/testvectors/bin/run.dart
+    description: Run cross-language crypto test vectors.

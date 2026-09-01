@@ -1,0 +1,31 @@
+name: kavach_core_storage_native
+description: >
+  Native (iOS/Android/macOS) implementations of kavach_core's SecureKeyStore
+  and LocalVaultCache interfaces: flutter_secure_storage for Keychain/Keystore
+  key material, drift (SQLite) for the local decrypted-vault cache.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.5.0
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  kavach_core:
+    path: ../core
+  flutter_secure_storage: ^9.2.2
+  drift: ^2.22.1
+  sqlite3_flutter_libs: ^0.5.27
+  path_provider: ^2.1.5
+  path: ^1.9.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  build_runner: ^2.4.13
+  drift_dev: ^2.22.1
+
+flutter:
