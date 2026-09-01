@@ -9,7 +9,16 @@ class SecureKeyStoreNative implements SecureKeyStore {
             const FlutterSecureStorage(
               aOptions: AndroidOptions(encryptedSharedPreferences: true),
               iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
-              mOptions: MacOsOptions(accessibility: KeychainAccessibility.first_unlock),
+              // `useDataProtectionKeyChain` defaults to true, which routes
+              // through the iOS-style Keychain API — that requires a
+              // `keychain-access-groups` entitlement signed with a real
+              // Apple Developer Team even for a non-sandboxed app, or every
+              // call fails with errSecMissingEntitlement (-34018). The
+              // legacy keychain needs no such entitlement.
+              mOptions: MacOsOptions(
+                accessibility: KeychainAccessibility.first_unlock,
+                useDataProtectionKeyChain: false,
+              ),
             );
 
   final FlutterSecureStorage _storage;
