@@ -5,7 +5,7 @@ import 'package:kavach_core/kavach_core.dart';
 
 import '../data/vault_repository.dart';
 
-enum VaultStatus { loading, needsCreation, locked, unlocked }
+enum VaultStatus { loading, needsCreation, pendingApproval, locked, unlocked }
 
 class VaultState {
   const VaultState({
@@ -51,8 +51,47 @@ class VaultController extends StateNotifier<VaultState> {
 
   Future<void> _init() async {
     final hasVault = await _repo.hasVault();
-    state = VaultState(status: hasVault ? VaultStatus.locked : VaultStatus.needsCreation);
+    if (!hasVault) {
+      state = const VaultState(status: VaultStatus.needsCreation);
+      return;
+    }
+    final hasKey = await _repo.hasCachedVaultKey();
+    state = VaultState(status: hasKey ? VaultStatus.locked : VaultStatus.pendingApproval);
   }
+
+  /// Registers this device against an existing vault's repo and waits for
+  /// an already-approved device to approve it (plan §5).
+  Future<void> joinExistingVault({
+    required String owner,
+    required String repo,
+    required String token,
+  }) async {
+    state = state.copyWith(error: null);
+    try {
+      await _repo.joinExistingVault(owner: owner, repo: repo, token: token);
+      state = const VaultState(status: VaultStatus.pendingApproval);
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  /// Checks whether another device has approved this one yet; unlocks
+  /// immediately (and kicks off an auto-sync) if so.
+  Future<bool> checkJoinApproval() async {
+    final approved = await _repo.checkJoinApproval();
+    if (approved) {
+      final ok = await _repo.unlock();
+      if (ok) {
+        await _refreshUnlocked();
+        unawaited(_autoSyncOnStart());
+      }
+    }
+    return approved;
+  }
+
+  Future<List<DeviceRecord>> listDevices() => _repo.listDevices();
+
+  Future<void> approveDevice(DeviceRecord device) => _repo.approveDevice(device);
 
   Future<void> createVault(String masterPassword) async {
     await _repo.createVault(masterPassword: masterPassword);

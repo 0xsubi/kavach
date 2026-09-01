@@ -35,7 +35,7 @@ class VaultListScreen extends ConsumerWidget {
                 ? const SizedBox(
                     width: 18,
                     height: 18,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: KavachColors.primary),
+                    child: CircularProgressIndicator(strokeWidth: 2, color: KavachColors.accent),
                   )
                 : const Icon(Icons.sync),
             tooltip: 'Sync now',
@@ -109,11 +109,18 @@ class _VaultItemTile extends StatelessWidget {
       child: KavachCard(
         child: Row(
           children: [
-            CircleAvatar(
-              backgroundColor: KavachColors.primary.withValues(alpha: 0.15),
+            Container(
+              width: 44,
+              height: 44,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: KavachColors.surface,
+                border: Border.all(color: KavachColors.border),
+              ),
               child: Text(
                 item.displayName.isNotEmpty ? item.displayName[0].toUpperCase() : '?',
-                style: const TextStyle(color: KavachColors.primary, fontWeight: FontWeight.w700),
+                style: const TextStyle(color: KavachColors.textPrimary, fontWeight: FontWeight.w700),
               ),
             ),
             const SizedBox(width: 16),

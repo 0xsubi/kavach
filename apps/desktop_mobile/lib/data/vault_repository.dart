@@ -7,11 +7,9 @@ import 'package:sodium/sodium_sumo.dart';
 import 'package:uuid/uuid.dart';
 
 /// Orchestrates the vault: device identity, vault-key lifecycle, item CRUD
-/// against [LocalVaultCache] (plan §10 phase 1), and GitHub sync (phase 2)
-/// on top of the [SyncEngine]/[VaultProvisioning] that already exist in
-/// `core`. Device-approval for a *second* device is not implemented yet —
-/// [syncNow] always self-wraps the vault key for the current device, which
-/// is only correct for a single-device vault.
+/// against [LocalVaultCache] (plan §10 phase 1), GitHub sync (phase 2), and
+/// multi-device approval (plan §5 "new device onboarding") — all on top of
+/// the [SyncEngine]/[VaultProvisioning] that already exist in `core`.
 class VaultRepository {
   VaultRepository({
     required this.secureStore,
@@ -50,6 +48,12 @@ class VaultRepository {
   KeyPair? get deviceKeyPair => _deviceKeyPair;
 
   Future<bool> hasVault() async => (await secureStore.read(SecureKeyStoreKeys.deviceId)) != null;
+
+  /// True once this device has a usable vault key cached — false for a
+  /// device that registered via [joinExistingVault] but hasn't been
+  /// approved yet.
+  Future<bool> hasCachedVaultKey() async =>
+      (await secureStore.read('${SecureKeyStoreKeys.cachedVaultKeyPrefix}$epoch')) != null;
 
   Future<void> createVault({required String masterPassword}) async {
     final deviceId = _uuid.v4();
@@ -213,8 +217,8 @@ class VaultRepository {
     _syncEngine = null;
   }
 
-  Future<SyncEngine> _ensureSyncEngine() async {
-    final cached = _syncEngine;
+  Future<GitHubClient> _ensureGitHubClient() async {
+    final cached = _githubClient;
     if (cached != null) return cached;
 
     final owner = await secureStore.read(_githubOwnerKey);
@@ -229,6 +233,13 @@ class VaultRepository {
       httpClient: githubHttpClient,
     );
     _githubClient = client;
+    return client;
+  }
+
+  Future<SyncEngine> _ensureSyncEngine() async {
+    final cached = _syncEngine;
+    if (cached != null) return cached;
+    final client = await _ensureGitHubClient();
     final engine = SyncEngine(github: client, cache: cache, crypto: crypto, deviceId: _deviceId!);
     _syncEngine = engine;
     return engine;
@@ -279,12 +290,14 @@ class VaultRepository {
         'vault_id': vaultId,
         'current_epoch': epoch,
       })),
-      RepoPaths.device(deviceId): utf8.encode(jsonEncode({
-        'device_id': deviceId,
-        'public_key': base64Encode(deviceKeyPair.publicKey),
-        'status': 'approved',
-        'platform': Platform.operatingSystem,
-      })),
+      RepoPaths.device(deviceId): utf8.encode(jsonEncode(
+        DeviceRecord(
+          deviceId: deviceId,
+          publicKey: base64Encode(deviceKeyPair.publicKey),
+          status: DeviceStatus.approved,
+          platform: Platform.operatingSystem,
+        ).toJson(),
+      )),
       RepoPaths.vaultKeyForDevice(epoch, deviceId): utf8.encode(jsonEncode({
         'epoch': epoch,
         'device_id': deviceId,
@@ -302,6 +315,200 @@ class VaultRepository {
     }
 
     return files;
+  }
+
+  // ---------------------------------------------------------------------
+  // Multi-device approval (plan §5 "new device onboarding").
+  // ---------------------------------------------------------------------
+
+  /// Registers this (brand-new, un-vaulted) device against an *existing*
+  /// vault repo: generates its own keypair, writes a plaintext pending
+  /// `devices/<id>.json`, and waits — it has no vault key until an already-
+  /// approved device calls [approveDevice] for it. Unlike [createVault],
+  /// this never touches a master password: only the approver needs one (to
+  /// unlock and re-wrap), the new device just needs to be let in.
+  Future<void> joinExistingVault({
+    required String owner,
+    required String repo,
+    required String token,
+  }) async {
+    final deviceId = _uuid.v4();
+    final deviceKeyPair = crypto.generateDeviceKeyPair();
+
+    await secureStore.write(SecureKeyStoreKeys.deviceId, deviceId);
+    await secureStore.write(
+      SecureKeyStoreKeys.devicePrivateKey,
+      base64Encode(deviceKeyPair.secretKey.extractBytes()),
+    );
+    await secureStore.write(
+      SecureKeyStoreKeys.devicePublicKey,
+      base64Encode(deviceKeyPair.publicKey),
+    );
+    await configureGitHub(owner: owner, repo: repo, token: token);
+    _deviceId = deviceId;
+
+    final client = await _ensureGitHubClient();
+    final headSha = await client.getHeadCommitSha();
+    if (headSha == null) {
+      throw StateError(
+        'This GitHub repo has no vault yet — ask the vault owner to finish creating it first.',
+      );
+    }
+    final treeSha = await client.getCommitTreeSha(headSha);
+
+    final record = DeviceRecord(
+      deviceId: deviceId,
+      publicKey: base64Encode(deviceKeyPair.publicKey),
+      status: DeviceStatus.pending,
+      platform: Platform.operatingSystem,
+    );
+    final blobSha = await client.createBlob(utf8.encode(jsonEncode(record.toJson())));
+    final newTreeSha = await client.createTree(
+      [GitTreeEntry(path: RepoPaths.device(deviceId), mode: '100644', type: 'blob', sha: blobSha)],
+      baseTreeSha: treeSha,
+    );
+    final commitSha = await client.createCommit(
+      message: 'Kavach: device $deviceId requests approval',
+      treeSha: newTreeSha,
+      parentShas: [headSha],
+    );
+    final landed = await client.updateRefFastForward(commitSha);
+    if (!landed) {
+      throw StateError('Failed to register this device — the repo changed concurrently. Please retry.');
+    }
+  }
+
+  /// Polls for an approval: looks for this device's
+  /// `keys/vault-key.{epoch}.{deviceId}.json`, and if present, unwraps it
+  /// (looking up the approving device's public key from its own device
+  /// record) and caches the vault key locally. Safe to call repeatedly from
+  /// a "waiting for approval" screen, including after an app restart — it
+  /// reads device identity straight from [secureStore] rather than relying
+  /// on in-memory state from [joinExistingVault].
+  Future<bool> checkJoinApproval() async {
+    final deviceId = await secureStore.read(SecureKeyStoreKeys.deviceId);
+    final privB64 = await secureStore.read(SecureKeyStoreKeys.devicePrivateKey);
+    final pubB64 = await secureStore.read(SecureKeyStoreKeys.devicePublicKey);
+    if (deviceId == null || privB64 == null || pubB64 == null) return false;
+    _deviceId = deviceId;
+
+    final client = await _ensureGitHubClient();
+    final headSha = await client.getHeadCommitSha();
+    if (headSha == null) return false;
+    final treeSha = await client.getCommitTreeSha(headSha);
+    final tree = await client.getTreeRecursive(treeSha);
+
+    final wrappedEntry = _findEntry(tree, RepoPaths.vaultKeyForDevice(epoch, deviceId));
+    if (wrappedEntry?.sha == null) return false;
+    final wrappedJson = jsonDecode(utf8.decode(await client.getBlobBytes(wrappedEntry!.sha!)))
+        as Map<String, dynamic>;
+    final approverId = wrappedJson['wrapped_by_device_id'] as String;
+
+    final approverEntry = _findEntry(tree, RepoPaths.device(approverId));
+    if (approverEntry?.sha == null) return false;
+    final approverRecord = DeviceRecord.fromJson(
+      jsonDecode(utf8.decode(await client.getBlobBytes(approverEntry!.sha!))) as Map<String, dynamic>,
+    );
+
+    final vaultKey = crypto.unwrapVaultKey(
+      wrapped: base64Decode(wrappedJson['wrapped'] as String),
+      senderPublicKey: base64Decode(approverRecord.publicKey),
+      recipientKeyPair: KeyPair(
+        publicKey: base64Decode(pubB64),
+        secretKey: SecureKey.fromList(_sodium, base64Decode(privB64)),
+      ),
+    );
+    await secureStore.write(
+      '${SecureKeyStoreKeys.cachedVaultKeyPrefix}$epoch',
+      base64Encode(vaultKey.extractBytes()),
+    );
+    vaultKey.dispose();
+    return true;
+  }
+
+  /// Lists every device record in the repo (plan §5's device-approval UI),
+  /// pending and approved alike.
+  Future<List<DeviceRecord>> listDevices() async {
+    final client = await _ensureGitHubClient();
+    final headSha = await client.getHeadCommitSha();
+    if (headSha == null) return const [];
+    final treeSha = await client.getCommitTreeSha(headSha);
+    final tree = await client.getTreeRecursive(treeSha);
+
+    final devices = <DeviceRecord>[];
+    for (final entry in tree) {
+      if (!entry.path.startsWith(RepoPaths.devicesDirPrefix)) continue;
+      if (entry.sha == null) continue;
+      final bytes = await client.getBlobBytes(entry.sha!);
+      devices.add(DeviceRecord.fromJson(jsonDecode(utf8.decode(bytes)) as Map<String, dynamic>));
+    }
+    return devices;
+  }
+
+  /// Approves [device]: wraps the (unlocked) vault key for its public key
+  /// and flips its record to approved, in one commit. Only callable from an
+  /// already-unlocked, already-approved device.
+  Future<void> approveDevice(DeviceRecord device) async {
+    final vaultKey = _vaultKey;
+    final approverKeyPair = _deviceKeyPair;
+    final approverId = _deviceId;
+    if (vaultKey == null || approverKeyPair == null || approverId == null) {
+      throw StateError('Vault must be unlocked to approve a device.');
+    }
+
+    final client = await _ensureGitHubClient();
+    final headSha = await client.getHeadCommitSha();
+    if (headSha == null) throw StateError('Remote vault is not initialized yet.');
+    final treeSha = await client.getCommitTreeSha(headSha);
+
+    final wrapped = crypto.wrapVaultKeyForDevice(
+      vaultKey: vaultKey,
+      recipientPublicKey: base64Decode(device.publicKey),
+      senderKeyPair: approverKeyPair,
+    );
+    final wrappedBlobSha = await client.createBlob(utf8.encode(jsonEncode({
+      'epoch': epoch,
+      'device_id': device.deviceId,
+      'wrapped_by_device_id': approverId,
+      'wrapped': base64Encode(wrapped),
+    })));
+    final deviceBlobSha = await client.createBlob(
+      utf8.encode(jsonEncode(device.copyWith(status: DeviceStatus.approved).toJson())),
+    );
+
+    final newTreeSha = await client.createTree(
+      [
+        GitTreeEntry(
+          path: RepoPaths.vaultKeyForDevice(epoch, device.deviceId),
+          mode: '100644',
+          type: 'blob',
+          sha: wrappedBlobSha,
+        ),
+        GitTreeEntry(
+          path: RepoPaths.device(device.deviceId),
+          mode: '100644',
+          type: 'blob',
+          sha: deviceBlobSha,
+        ),
+      ],
+      baseTreeSha: treeSha,
+    );
+    final commitSha = await client.createCommit(
+      message: 'Kavach: approve device ${device.deviceId}',
+      treeSha: newTreeSha,
+      parentShas: [headSha],
+    );
+    final landed = await client.updateRefFastForward(commitSha);
+    if (!landed) {
+      throw StateError('Approval failed: the repo changed concurrently. Please retry.');
+    }
+  }
+
+  GitTreeEntry? _findEntry(List<GitTreeEntry> tree, String path) {
+    for (final entry in tree) {
+      if (entry.path == path) return entry;
+    }
+    return null;
   }
 }
 

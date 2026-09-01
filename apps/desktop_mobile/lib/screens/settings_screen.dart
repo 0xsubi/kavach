@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:neopop_theme/neopop_theme.dart';
 
 import '../state/vault_controller.dart';
+import 'devices_screen.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -69,7 +70,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       ),
       body: SafeArea(
         child: _loadingExisting
-            ? const Center(child: CircularProgressIndicator(color: KavachColors.primary))
+            ? const Center(child: CircularProgressIndicator(color: KavachColors.accent))
             : SingleChildScrollView(
                 padding: const EdgeInsets.all(24),
                 child: Column(
@@ -116,6 +117,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         style: const TextStyle(color: KavachColors.textSecondary, fontSize: 13),
                       ),
                     ],
+                    const SizedBox(height: 12),
+                    KavachButton(
+                      label: 'Devices',
+                      icon: Icons.devices_outlined,
+                      color: KavachColors.surface,
+                      textColor: KavachColors.textPrimary,
+                      outlined: true,
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const DevicesScreen()),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -127,7 +139,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(label, style: const TextStyle(color: KavachColors.textSecondary, fontSize: 13)),
+        KavachSectionLabel(label),
         const SizedBox(height: 8),
         TextField(
           controller: controller,

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:neopop_theme/neopop_theme.dart';
 
 import '../state/vault_controller.dart';
+import 'join_vault_screen.dart';
 
 class CreateVaultScreen extends ConsumerStatefulWidget {
   const CreateVaultScreen({super.key});
@@ -60,7 +61,7 @@ class _CreateVaultScreenState extends ConsumerState<CreateVaultScreen> {
                     style: TextStyle(
                       color: KavachColors.primary,
                       fontSize: 40,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -75,10 +76,7 @@ class _CreateVaultScreenState extends ConsumerState<CreateVaultScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const Text(
-                          'Master password',
-                          style: TextStyle(color: KavachColors.textSecondary, fontSize: 13),
-                        ),
+                        const KavachSectionLabel('Master password'),
                         const SizedBox(height: 8),
                         TextField(
                           controller: _passwordController,
@@ -87,10 +85,7 @@ class _CreateVaultScreenState extends ConsumerState<CreateVaultScreen> {
                           decoration: const InputDecoration(border: OutlineInputBorder()),
                         ),
                         const SizedBox(height: 16),
-                        const Text(
-                          'Confirm password',
-                          style: TextStyle(color: KavachColors.textSecondary, fontSize: 13),
-                        ),
+                        const KavachSectionLabel('Confirm password'),
                         const SizedBox(height: 8),
                         TextField(
                           controller: _confirmController,
@@ -117,6 +112,18 @@ class _CreateVaultScreenState extends ConsumerState<CreateVaultScreen> {
                     'device is lost. Write it down somewhere safe.',
                     style: TextStyle(color: KavachColors.textSecondary, fontSize: 12),
                     textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24),
+                  Center(
+                    child: TextButton(
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const JoinVaultScreen()),
+                      ),
+                      child: const Text(
+                        'Already have a vault? Join with another device\'s approval',
+                        style: TextStyle(color: KavachColors.accent, fontSize: 13),
+                      ),
+                    ),
                   ),
                 ],
               ),

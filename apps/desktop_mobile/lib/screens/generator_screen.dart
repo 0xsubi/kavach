@@ -71,9 +71,9 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
                 child: SelectableText(
                   _password.isEmpty ? '—' : _password,
                   style: const TextStyle(
-                    color: KavachColors.primary,
+                    color: KavachColors.accent,
                     fontSize: 22,
-                    fontFamily: 'monospace',
+                    fontFamily: KavachFonts.mono,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -93,7 +93,7 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
                       min: 8,
                       max: 64,
                       divisions: 56,
-                      activeColor: KavachColors.primary,
+                      activeColor: KavachColors.accent,
                       label: _length.round().toString(),
                       onChanged: (v) {
                         setState(() => _length = v);
@@ -136,11 +136,13 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
                 icon: Icons.refresh,
                 onTap: _regenerate,
                 color: KavachColors.surface,
+                textColor: KavachColors.textPrimary,
+                outlined: true,
               ),
               const SizedBox(height: 12),
               KavachButton(
                 label: 'Copy to clipboard',
-                icon: Icons.copy,
+                icon: Icons.copy_outlined,
                 onTap: _password.isEmpty
                     ? null
                     : () {
@@ -167,7 +169,7 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
   Widget _togglRow(String label, bool value, ValueChanged<bool> onChanged) {
     return SwitchListTile(
       contentPadding: EdgeInsets.zero,
-      activeThumbColor: KavachColors.primary,
+      activeThumbColor: KavachColors.accent,
       title: Text(label, style: const TextStyle(color: KavachColors.textPrimary)),
       value: value,
       onChanged: onChanged,

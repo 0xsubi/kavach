@@ -66,7 +66,7 @@ class _UnlockScreenState extends ConsumerState<UnlockScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Icon(Icons.lock, color: KavachColors.primary, size: 48),
+                  const Icon(Icons.lock_outline, color: KavachColors.primary, size: 48),
                   const SizedBox(height: 16),
                   const Text(
                     'Vault locked',
@@ -83,10 +83,7 @@ class _UnlockScreenState extends ConsumerState<UnlockScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          const Text(
-                            'Master password',
-                            style: TextStyle(color: KavachColors.textSecondary, fontSize: 13),
-                          ),
+                          const KavachSectionLabel('Master password'),
                           const SizedBox(height: 8),
                           TextField(
                             controller: _masterPasswordController,
@@ -108,7 +105,7 @@ class _UnlockScreenState extends ConsumerState<UnlockScreen> {
                       onTap: _busy ? null : _submitMasterPassword,
                     ),
                   ] else
-                    const CircularProgressIndicator(color: KavachColors.primary),
+                    const CircularProgressIndicator(color: KavachColors.accent),
                 ],
               ),
             ),

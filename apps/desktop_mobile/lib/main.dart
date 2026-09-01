@@ -6,6 +6,7 @@ import 'package:sodium_libs/sodium_libs_sumo.dart';
 
 import 'data/vault_repository.dart';
 import 'screens/create_vault_screen.dart';
+import 'screens/pending_approval_screen.dart';
 import 'screens/unlock_screen.dart';
 import 'screens/vault_list_screen.dart';
 import 'state/vault_controller.dart';
@@ -38,11 +39,28 @@ class KavachApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
+        fontFamily: KavachFonts.display,
         scaffoldBackgroundColor: KavachColors.background,
         colorScheme: ColorScheme.fromSeed(
           seedColor: KavachColors.primary,
-          brightness: Brightness.dark,
+          brightness: Brightness.light,
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: false,
+          hintStyle: const TextStyle(color: KavachColors.textSecondary),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: KavachColors.border),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: KavachColors.border),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: KavachColors.primary, width: 1.5),
+          ),
         ),
       ),
       home: const _AppShell(),
@@ -59,9 +77,10 @@ class _AppShell extends ConsumerWidget {
     return switch (status) {
       VaultStatus.loading => const Scaffold(
           backgroundColor: KavachColors.background,
-          body: Center(child: CircularProgressIndicator(color: KavachColors.primary)),
+          body: Center(child: CircularProgressIndicator(color: KavachColors.accent)),
         ),
       VaultStatus.needsCreation => const CreateVaultScreen(),
+      VaultStatus.pendingApproval => const PendingApprovalScreen(),
       VaultStatus.locked => const UnlockScreen(),
       VaultStatus.unlocked => const VaultListScreen(),
     };

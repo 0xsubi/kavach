@@ -116,7 +116,7 @@ class _ItemEditorScreenState extends ConsumerState<ItemEditorScreen> {
                     TextField(
                       controller: _password,
                       obscureText: _obscure,
-                      style: const TextStyle(color: KavachColors.textPrimary, fontFamily: 'monospace'),
+                      style: const TextStyle(color: KavachColors.textPrimary, fontFamily: KavachFonts.mono),
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(),
                         suffixIcon: Row(
@@ -124,13 +124,13 @@ class _ItemEditorScreenState extends ConsumerState<ItemEditorScreen> {
                           children: [
                             IconButton(
                               icon: Icon(
-                                _obscure ? Icons.visibility_off : Icons.visibility,
+                                _obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined,
                                 color: KavachColors.textSecondary,
                               ),
                               onPressed: () => setState(() => _obscure = !_obscure),
                             ),
                             IconButton(
-                              icon: const Icon(Icons.copy, color: KavachColors.textSecondary),
+                              icon: const Icon(Icons.copy_outlined, color: KavachColors.textSecondary),
                               onPressed: () {
                                 Clipboard.setData(ClipboardData(text: _password.text));
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -147,8 +147,8 @@ class _ItemEditorScreenState extends ConsumerState<ItemEditorScreen> {
                       alignment: Alignment.centerLeft,
                       child: TextButton.icon(
                         onPressed: _openGenerator,
-                        icon: const Icon(Icons.casino, size: 18, color: KavachColors.primary),
-                        label: const Text('Generate', style: TextStyle(color: KavachColors.primary)),
+                        icon: const Icon(Icons.casino_outlined, size: 18, color: KavachColors.accent),
+                        label: const Text('Generate', style: TextStyle(color: KavachColors.accent)),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -177,8 +177,7 @@ class _ItemEditorScreenState extends ConsumerState<ItemEditorScreen> {
     );
   }
 
-  Widget _label(String text) =>
-      Text(text, style: const TextStyle(color: KavachColors.textSecondary, fontSize: 13));
+  Widget _label(String text) => KavachSectionLabel(text);
 
   Widget _field(String label, TextEditingController controller) {
     return Column(
