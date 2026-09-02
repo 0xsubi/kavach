@@ -34,7 +34,9 @@ xcuserdata/
 *.keystore
 
 # Web / extension
-extension/dist/
+# Matches extension/shell/dist/ (the unpacked extension the build emits) at
+# any depth — a bare `extension/dist/` silently matched nothing.
+extension/**/dist/
 node_modules/
 extension/flutter_popup/build/
 

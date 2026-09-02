@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "Kavach",
+  "version": "0.1.0",
+  "description": "Self-hosted, end-to-end encrypted password manager — your vault lives in your own private GitHub repo.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    },
+    "default_title": "kavach"
+  },
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "popup/index.html"
+  },
+  "permissions": ["sidePanel", "storage", "activeTab", "scripting", "offscreen"],
+  "host_permissions": ["<all_urls>"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/detect-forms.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ]
+}

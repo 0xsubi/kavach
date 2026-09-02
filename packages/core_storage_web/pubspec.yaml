@@ -1,0 +1,26 @@
+name: kavach_core_storage_web
+description: >
+  Web/browser-extension implementations of kavach_core's SecureKeyStore and
+  LocalVaultCache interfaces: chrome.storage.local for key material (the
+  only persistence an extension popup/service-worker has that isn't the OS
+  Keychain), IndexedDB for the local decrypted-vault cache.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.5.0
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  kavach_core:
+    path: ../core
+  web: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:

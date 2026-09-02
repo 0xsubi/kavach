@@ -1,0 +1,130 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:neopop_theme/neopop_theme.dart';
+
+import '../state/vault_controller.dart';
+import 'devices_screen.dart';
+
+class SettingsScreen extends ConsumerStatefulWidget {
+  const SettingsScreen({super.key});
+
+  @override
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  final _owner = TextEditingController();
+  final _repo = TextEditingController();
+  final _token = TextEditingController();
+  bool _loadingExisting = true;
+  bool _saving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadExisting();
+  }
+
+  Future<void> _loadExisting() async {
+    final target = await ref.read(vaultControllerProvider.notifier).gitHubTarget();
+    if (target != null) {
+      _owner.text = target.owner;
+      _repo.text = target.repo;
+    }
+    if (mounted) setState(() => _loadingExisting = false);
+  }
+
+  @override
+  void dispose() {
+    _owner.dispose();
+    _repo.dispose();
+    _token.dispose();
+    super.dispose();
+  }
+
+  Future<void> _saveAndSync() async {
+    if (_owner.text.trim().isEmpty || _repo.text.trim().isEmpty || _token.text.trim().isEmpty) return;
+    setState(() => _saving = true);
+    final notifier = ref.read(vaultControllerProvider.notifier);
+    await notifier.configureGitHub(owner: _owner.text.trim(), repo: _repo.text.trim(), token: _token.text.trim());
+    await notifier.syncNow();
+    if (mounted) setState(() => _saving = false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(vaultControllerProvider);
+
+    return Scaffold(
+      backgroundColor: KavachColors.background,
+      appBar: AppBar(
+        backgroundColor: KavachColors.background,
+        iconTheme: const IconThemeData(color: KavachColors.textPrimary),
+        title: const Text('GitHub sync', style: TextStyle(color: KavachColors.textPrimary, fontSize: 16)),
+      ),
+      body: SafeArea(
+        child: _loadingExisting
+            ? const Center(child: CircularProgressIndicator(color: KavachColors.accent))
+            : SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    KavachCard(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _field('repo owner', _owner, hint: 'e.g. your-username'),
+                          const SizedBox(height: 10),
+                          _field('repo name', _repo, hint: 'e.g. kavach-vault'),
+                          const SizedBox(height: 10),
+                          _field('personal access token', _token, hint: 'fine-grained pat', obscure: true),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    KavachButton(
+                      label: _saving ? 'syncing…' : 'save & sync now',
+                      onTap: _saving ? null : _saveAndSync,
+                    ),
+                    if (state.syncError != null) ...[
+                      const SizedBox(height: 12),
+                      Text(state.syncError!, style: const TextStyle(color: KavachColors.danger, fontSize: 12)),
+                    ],
+                    const SizedBox(height: 10),
+                    KavachButton(
+                      label: 'devices',
+                      icon: Icons.devices_outlined,
+                      color: KavachColors.surface,
+                      textColor: KavachColors.textPrimary,
+                      outlined: true,
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const DevicesScreen())),
+                    ),
+                  ],
+                ),
+              ),
+      ),
+    );
+  }
+
+  Widget _field(String label, TextEditingController controller, {String? hint, bool obscure = false}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        KavachSectionLabel(label),
+        const SizedBox(height: 6),
+        TextField(
+          controller: controller,
+          obscureText: obscure,
+          style: const TextStyle(color: KavachColors.textPrimary),
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            isDense: true,
+            hintText: hint,
+            hintStyle: const TextStyle(color: KavachColors.textSecondary),
+          ),
+        ),
+      ],
+    );
+  }
+}
