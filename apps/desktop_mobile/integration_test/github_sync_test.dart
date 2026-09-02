@@ -163,9 +163,9 @@ void main() {
 
     await tester.enterText(find.byType(TextField).at(0), 'correct horse battery staple');
     await tester.enterText(find.byType(TextField).at(1), 'correct horse battery staple');
-    await tester.ensureVisible(find.text('Create vault'));
+    await tester.ensureVisible(find.text('create vault'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Create vault'));
+    await tester.tap(find.text('create vault'));
     await tester.pumpAndSettle();
 
     await tester.tap(find.byIcon(Icons.add));
@@ -174,9 +174,9 @@ void main() {
     await tester.enterText(itemFields.at(0), 'GitHub');
     await tester.enterText(itemFields.at(1), 'sudhabindu1@gmail.com');
     await tester.enterText(itemFields.at(2), 's3cr3t-p@ssw0rd');
-    await tester.ensureVisible(find.text('Save'));
+    await tester.ensureVisible(find.text('save'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Save'));
+    await tester.tap(find.text('save'));
     await tester.pumpAndSettle();
 
     await tester.tap(find.byIcon(Icons.settings_outlined));
@@ -187,12 +187,12 @@ void main() {
     await tester.enterText(settingsFields.at(0), 'sudhabindu1');
     await tester.enterText(settingsFields.at(1), 'kavach-vault');
     await tester.enterText(settingsFields.at(2), 'ghp_test_token');
-    await tester.ensureVisible(find.text('Save & sync now'));
+    await tester.ensureVisible(find.text('save & sync now'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Save & sync now'));
+    await tester.tap(find.text('save & sync now'));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Sync failed'), findsNothing);
+    expect(find.textContaining('sync failed'), findsNothing);
     expect(find.textContaining('1 pushed'), findsOneWidget);
 
     // Two commits: VaultProvisioning's initial `.kavach/` scaffolding commit,

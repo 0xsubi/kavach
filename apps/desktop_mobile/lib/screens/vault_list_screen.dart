@@ -9,17 +9,44 @@ import 'generator_screen.dart';
 import 'item_editor_screen.dart';
 import 'settings_screen.dart';
 
-class VaultListScreen extends ConsumerWidget {
+class VaultListScreen extends ConsumerStatefulWidget {
   const VaultListScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<VaultListScreen> createState() => _VaultListScreenState();
+}
+
+class _VaultListScreenState extends ConsumerState<VaultListScreen> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Background/foreground sync trigger (plan §10 phase 3): resuming from
+    // the background is exactly when this device is most likely to have
+    // missed changes another device made in the meantime.
+    if (state == AppLifecycleState.resumed) {
+      ref.read(vaultControllerProvider.notifier).syncIfConfigured();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final state = ref.watch(vaultControllerProvider);
 
     ref.listen(vaultControllerProvider, (previous, next) {
       final err = next.syncError;
       if (err != null && err != previous?.syncError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Sync failed: $err')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('sync failed: $err')));
       }
     });
 
@@ -27,7 +54,7 @@ class VaultListScreen extends ConsumerWidget {
       backgroundColor: KavachColors.background,
       appBar: AppBar(
         backgroundColor: KavachColors.background,
-        title: const Text('Kavach', style: TextStyle(color: KavachColors.primary)),
+        title: const Text('kavach', style: TextStyle(color: KavachColors.primary)),
         iconTheme: const IconThemeData(color: KavachColors.textPrimary),
         actions: [
           IconButton(
@@ -38,7 +65,7 @@ class VaultListScreen extends ConsumerWidget {
                     child: CircularProgressIndicator(strokeWidth: 2, color: KavachColors.accent),
                   )
                 : const Icon(Icons.sync),
-            tooltip: 'Sync now',
+            tooltip: 'sync now',
             onPressed: state.isSyncing
                 ? null
                 : () => ref.read(vaultControllerProvider.notifier).syncNow(),
@@ -52,14 +79,14 @@ class VaultListScreen extends ConsumerWidget {
           ),
           IconButton(
             icon: const Icon(Icons.casino_outlined),
-            tooltip: 'Password generator',
+            tooltip: 'password generator',
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const GeneratorScreen()),
             ),
           ),
           IconButton(
             icon: const Icon(Icons.lock_outline),
-            tooltip: 'Lock vault',
+            tooltip: 'lock vault',
             onPressed: () => ref.read(vaultControllerProvider.notifier).lock(),
           ),
         ],
@@ -68,7 +95,7 @@ class VaultListScreen extends ConsumerWidget {
         child: state.items.isEmpty
             ? const Center(
                 child: Text(
-                  'No items yet.\nTap + to add your first password.',
+                  'no items yet.\ntap + to add your first password.',
                   textAlign: TextAlign.center,
                   style: TextStyle(color: KavachColors.textSecondary),
                 ),

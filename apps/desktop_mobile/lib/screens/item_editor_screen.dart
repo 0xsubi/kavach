@@ -86,7 +86,7 @@ class _ItemEditorScreenState extends ConsumerState<ItemEditorScreen> {
         backgroundColor: KavachColors.background,
         iconTheme: const IconThemeData(color: KavachColors.textPrimary),
         title: Text(
-          isEditing ? 'Edit item' : 'New item',
+          isEditing ? 'edit item' : 'new item',
           style: const TextStyle(color: KavachColors.textPrimary),
         ),
         actions: [
@@ -107,11 +107,11 @@ class _ItemEditorScreenState extends ConsumerState<ItemEditorScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _field('Name', _name),
+                    _field('name', _name),
                     const SizedBox(height: 16),
-                    _field('Username / email', _username),
+                    _field('username / email', _username),
                     const SizedBox(height: 16),
-                    _label('Password'),
+                    _label('password'),
                     const SizedBox(height: 8),
                     TextField(
                       controller: _password,
@@ -134,7 +134,7 @@ class _ItemEditorScreenState extends ConsumerState<ItemEditorScreen> {
                               onPressed: () {
                                 Clipboard.setData(ClipboardData(text: _password.text));
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Copied to clipboard')),
+                                  const SnackBar(content: Text('copied to clipboard')),
                                 );
                               },
                             ),
@@ -148,13 +148,13 @@ class _ItemEditorScreenState extends ConsumerState<ItemEditorScreen> {
                       child: TextButton.icon(
                         onPressed: _openGenerator,
                         icon: const Icon(Icons.casino_outlined, size: 18, color: KavachColors.accent),
-                        label: const Text('Generate', style: TextStyle(color: KavachColors.accent)),
+                        label: const Text('generate', style: TextStyle(color: KavachColors.accent)),
                       ),
                     ),
                     const SizedBox(height: 8),
-                    _field('Website / URI', _uri),
+                    _field('website / uri', _uri),
                     const SizedBox(height: 16),
-                    _label('Notes'),
+                    _label('notes'),
                     const SizedBox(height: 8),
                     TextField(
                       controller: _notes,
@@ -167,7 +167,7 @@ class _ItemEditorScreenState extends ConsumerState<ItemEditorScreen> {
               ),
               const SizedBox(height: 24),
               KavachButton(
-                label: _busy ? 'Saving…' : 'Save',
+                label: _busy ? 'saving…' : 'save',
                 onTap: _busy ? null : _save,
               ),
             ],

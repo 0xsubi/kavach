@@ -77,8 +77,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Text(
-                      'Your vault is stored, client-side encrypted, in a private GitHub repo '
-                      'you control. Kavach never sends plaintext to GitHub.',
+                      'your vault is stored, client-side encrypted, in a private GitHub repo '
+                      'you control. kavach never sends plaintext to GitHub.',
                       style: TextStyle(color: KavachColors.textSecondary, fontSize: 13),
                     ),
                     const SizedBox(height: 24),
@@ -86,14 +86,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          _field('Repo owner', _owner, hint: 'e.g. sudhabindu1'),
+                          _field('repo owner', _owner, hint: 'e.g. sudhabindu1'),
                           const SizedBox(height: 16),
-                          _field('Repo name', _repo, hint: 'e.g. kavach-vault'),
+                          _field('repo name', _repo, hint: 'e.g. kavach-vault'),
                           const SizedBox(height: 16),
                           _field(
-                            'Personal access token',
+                            'personal access token',
                             _token,
-                            hint: 'fine-grained PAT with contents:write on this repo',
+                            hint: 'fine-grained pat with contents:write on this repo',
                             obscure: true,
                           ),
                         ],
@@ -101,7 +101,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     ),
                     const SizedBox(height: 24),
                     KavachButton(
-                      label: _saving ? 'Syncing…' : 'Save & sync now',
+                      label: _saving ? 'syncing…' : 'save & sync now',
                       onTap: _saving ? null : _saveAndSync,
                     ),
                     if (state.syncError != null) ...[
@@ -111,7 +111,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     if (state.lastSyncReport != null) ...[
                       const SizedBox(height: 16),
                       Text(
-                        'Last sync: ${state.lastSyncReport!.pushedItemIds.length} pushed, '
+                        'last sync: ${state.lastSyncReport!.pushedItemIds.length} pushed, '
                         '${state.lastSyncReport!.pulledItemIds.length} pulled, '
                         '${state.lastSyncReport!.conflictCopies.length} conflict(s).',
                         style: const TextStyle(color: KavachColors.textSecondary, fontSize: 13),
@@ -119,7 +119,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     ],
                     const SizedBox(height: 12),
                     KavachButton(
-                      label: 'Devices',
+                      label: 'devices',
                       icon: Icons.devices_outlined,
                       color: KavachColors.surface,
                       textColor: KavachColors.textPrimary,

@@ -1,0 +1,4 @@
+module KavachSwiftCore {
+header "KavachSwiftCore-Swift.h"
+export *
+}

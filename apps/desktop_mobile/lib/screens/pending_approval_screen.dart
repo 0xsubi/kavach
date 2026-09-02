@@ -51,7 +51,7 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen> {
                   const Icon(Icons.hourglass_top_outlined, color: KavachColors.primary, size: 48),
                   const SizedBox(height: 16),
                   const Text(
-                    'Waiting for approval',
+                    'waiting for approval',
                     style: TextStyle(
                       color: KavachColors.textPrimary,
                       fontSize: 24,
@@ -61,20 +61,20 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen> {
                   ),
                   const SizedBox(height: 12),
                   const Text(
-                    'Open Kavach on one of your other, already-unlocked devices, go to '
-                    'Settings → Devices, and approve this device.',
+                    'open kavach on one of your other, already-unlocked devices, go to '
+                    'settings → devices, and approve this device.',
                     style: TextStyle(color: KavachColors.textSecondary, fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 24),
                   KavachButton(
-                    label: _checking ? 'Checking…' : 'Check now',
+                    label: _checking ? 'checking…' : 'check now',
                     onTap: _checking ? null : _checkNow,
                   ),
                   if (_notYetApproved) ...[
                     const SizedBox(height: 16),
                     const Text(
-                      'Not approved yet.',
+                      'not approved yet.',
                       style: TextStyle(color: KavachColors.textSecondary, fontSize: 13),
                       textAlign: TextAlign.center,
                     ),

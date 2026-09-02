@@ -15,8 +15,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final sodium = await SodiumSumoInit.init();
   final database = await openVaultDatabase();
+  final secureStore = SecureKeyStoreNative();
+  await ensureFreshInstallState(secureStore);
   final repository = VaultRepository(
-    secureStore: SecureKeyStoreNative(),
+    secureStore: secureStore,
     cache: LocalVaultCacheNative(database),
     sodium: sodium,
   );
@@ -35,7 +37,7 @@ class KavachApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Kavach',
+      title: 'kavach',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,

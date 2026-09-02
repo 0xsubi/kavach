@@ -1,0 +1,59 @@
+{
+  "": {
+    "swift-dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/primary.swiftdeps"
+  },
+  "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/AuthenticatorData.swift": {
+    "dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/AuthenticatorData.d",
+    "object": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/AuthenticatorData.swift.o",
+    "swiftmodule": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/AuthenticatorData~partial.swiftmodule",
+    "swift-dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/AuthenticatorData.swiftdeps",
+    "diagnostics": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/AuthenticatorData.dia"  },
+  "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/CBOR.swift": {
+    "dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/CBOR.d",
+    "object": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/CBOR.swift.o",
+    "swiftmodule": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/CBOR~partial.swiftmodule",
+    "swift-dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/CBOR.swiftdeps",
+    "diagnostics": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/CBOR.dia"  },
+  "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/COSEKey.swift": {
+    "dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/COSEKey.d",
+    "object": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/COSEKey.swift.o",
+    "swiftmodule": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/COSEKey~partial.swiftmodule",
+    "swift-dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/COSEKey.swiftdeps",
+    "diagnostics": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/COSEKey.dia"  },
+  "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/IdentityStoreSync.swift": {
+    "dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/IdentityStoreSync.d",
+    "object": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/IdentityStoreSync.swift.o",
+    "swiftmodule": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/IdentityStoreSync~partial.swiftmodule",
+    "swift-dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/IdentityStoreSync.swiftdeps",
+    "diagnostics": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/IdentityStoreSync.dia"  },
+  "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/KeychainStore.swift": {
+    "dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/KeychainStore.d",
+    "object": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/KeychainStore.swift.o",
+    "swiftmodule": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/KeychainStore~partial.swiftmodule",
+    "swift-dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/KeychainStore.swiftdeps",
+    "diagnostics": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/KeychainStore.dia"  },
+  "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/PasskeyAuthenticator.swift": {
+    "dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyAuthenticator.d",
+    "object": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyAuthenticator.swift.o",
+    "swiftmodule": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyAuthenticator~partial.swiftmodule",
+    "swift-dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyAuthenticator.swiftdeps",
+    "diagnostics": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyAuthenticator.dia"  },
+  "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/PasskeyOutbox.swift": {
+    "dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyOutbox.d",
+    "object": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyOutbox.swift.o",
+    "swiftmodule": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyOutbox~partial.swiftmodule",
+    "swift-dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyOutbox.swiftdeps",
+    "diagnostics": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyOutbox.dia"  },
+  "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/PasskeyRecord.swift": {
+    "dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyRecord.d",
+    "object": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyRecord.swift.o",
+    "swiftmodule": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyRecord~partial.swiftmodule",
+    "swift-dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyRecord.swiftdeps",
+    "diagnostics": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyRecord.dia"  },
+  "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/SharedGroup.swift": {
+    "dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/SharedGroup.d",
+    "object": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/SharedGroup.swift.o",
+    "swiftmodule": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/SharedGroup~partial.swiftmodule",
+    "swift-dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/SharedGroup.swiftdeps",
+    "diagnostics": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/SharedGroup.dia"  }
+}

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:desktop_mobile/data/biometric_authenticator.dart';
 import 'package:desktop_mobile/data/vault_repository.dart';
 import 'package:desktop_mobile/main.dart';
 import 'package:desktop_mobile/state/vault_controller.dart';
@@ -28,6 +29,17 @@ class _FakeSecureKeyStore implements SecureKeyStore {
 
   @override
   Future<void> deleteAll() async => _values.clear();
+}
+
+/// Reports biometrics as unavailable, so `UnlockScreen`'s quick-unlock
+/// falls straight through to the cached-vault-key path instead of showing
+/// a real system Touch ID/password prompt during this automated test.
+class _FakeBiometricAuthenticator implements BiometricAuthenticator {
+  @override
+  Future<bool> isAvailable() async => false;
+
+  @override
+  Future<bool> authenticate() async => true;
 }
 
 /// Same in-memory Git Data API stand-in as github_sync_test.dart, shared by
@@ -156,7 +168,10 @@ void main() {
     );
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [vaultRepositoryProvider.overrideWithValue(repoA)],
+        overrides: [
+          vaultRepositoryProvider.overrideWithValue(repoA),
+          biometricAuthenticatorProvider.overrideWithValue(_FakeBiometricAuthenticator()),
+        ],
         child: const KavachApp(),
       ),
     );
@@ -164,9 +179,9 @@ void main() {
 
     await tester.enterText(find.byType(TextField).at(0), 'correct horse battery staple');
     await tester.enterText(find.byType(TextField).at(1), 'correct horse battery staple');
-    await tester.ensureVisible(find.text('Create vault'));
+    await tester.ensureVisible(find.text('create vault'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Create vault'));
+    await tester.tap(find.text('create vault'));
     await tester.pumpAndSettle();
 
     await tester.tap(find.byIcon(Icons.settings_outlined));
@@ -175,11 +190,11 @@ void main() {
     await tester.enterText(settingsFields.at(0), 'sudhabindu1');
     await tester.enterText(settingsFields.at(1), 'kavach-vault');
     await tester.enterText(settingsFields.at(2), 'ghp_test_token');
-    await tester.ensureVisible(find.text('Save & sync now'));
+    await tester.ensureVisible(find.text('save & sync now'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Save & sync now'));
+    await tester.tap(find.text('save & sync now'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('Sync failed'), findsNothing);
+    expect(find.textContaining('sync failed'), findsNothing);
   });
 
   testWidgets('2. device B requests to join and is not yet approved', (tester) async {
@@ -191,31 +206,34 @@ void main() {
     );
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [vaultRepositoryProvider.overrideWithValue(repoB)],
+        overrides: [
+          vaultRepositoryProvider.overrideWithValue(repoB),
+          biometricAuthenticatorProvider.overrideWithValue(_FakeBiometricAuthenticator()),
+        ],
         child: const KavachApp(),
       ),
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Create your vault'), findsOneWidget);
-    await tester.tap(find.textContaining('Already have a vault'));
+    expect(find.text('create your vault'), findsOneWidget);
+    await tester.tap(find.textContaining('already have a vault'));
     await tester.pumpAndSettle();
-    expect(find.text('Join a vault'), findsOneWidget);
+    expect(find.text('join a vault'), findsOneWidget);
 
     final joinFields = find.byType(TextField);
     await tester.enterText(joinFields.at(0), 'sudhabindu1');
     await tester.enterText(joinFields.at(1), 'kavach-vault');
     await tester.enterText(joinFields.at(2), 'ghp_test_token');
-    await tester.ensureVisible(find.text('Request to join'));
+    await tester.ensureVisible(find.text('request to join'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Request to join'));
+    await tester.tap(find.text('request to join'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Waiting for approval'), findsOneWidget);
+    expect(find.text('waiting for approval'), findsOneWidget);
 
-    await tester.tap(find.text('Check now'));
+    await tester.tap(find.text('check now'));
     await tester.pumpAndSettle();
-    expect(find.text('Not approved yet.'), findsOneWidget);
+    expect(find.text('not approved yet.'), findsOneWidget);
   });
 
   testWidgets('3. device A (reopened) approves device B', (tester) async {
@@ -227,7 +245,10 @@ void main() {
     );
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [vaultRepositoryProvider.overrideWithValue(repoA2)],
+        overrides: [
+          vaultRepositoryProvider.overrideWithValue(repoA2),
+          biometricAuthenticatorProvider.overrideWithValue(_FakeBiometricAuthenticator()),
+        ],
         child: const KavachApp(),
       ),
     );
@@ -235,15 +256,15 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Devices'));
+    await tester.ensureVisible(find.text('devices'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Devices'));
+    await tester.tap(find.text('devices'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Approve'), findsOneWidget);
-    await tester.tap(find.text('Approve'));
+    expect(find.text('approve'), findsOneWidget);
+    await tester.tap(find.text('approve'));
     await tester.pumpAndSettle();
-    expect(find.text('Approve'), findsNothing);
+    expect(find.text('approve'), findsNothing);
   });
 
   testWidgets('4. device B checks again and unlocks', (tester) async {
@@ -255,16 +276,19 @@ void main() {
     );
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [vaultRepositoryProvider.overrideWithValue(repoB2)],
+        overrides: [
+          vaultRepositoryProvider.overrideWithValue(repoB2),
+          biometricAuthenticatorProvider.overrideWithValue(_FakeBiometricAuthenticator()),
+        ],
         child: const KavachApp(),
       ),
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Waiting for approval'), findsOneWidget);
-    await tester.tap(find.text('Check now'));
+    expect(find.text('waiting for approval'), findsOneWidget);
+    await tester.tap(find.text('check now'));
     await tester.pumpAndSettle();
 
-    expect(find.text('No items yet.\nTap + to add your first password.'), findsOneWidget);
+    expect(find.text('no items yet.\ntap + to add your first password.'), findsOneWidget);
   });
 }

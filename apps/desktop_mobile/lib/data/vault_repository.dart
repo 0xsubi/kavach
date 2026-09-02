@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io' show Platform;
 
@@ -5,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:kavach_core/kavach_core.dart';
 import 'package:sodium/sodium_sumo.dart';
 import 'package:uuid/uuid.dart';
+
+import 'passkey_bridge.dart';
 
 /// Orchestrates the vault: device identity, vault-key lifecycle, item CRUD
 /// against [LocalVaultCache] (plan §10 phase 1), GitHub sync (phase 2), and
@@ -16,13 +19,16 @@ class VaultRepository {
     required this.cache,
     required SodiumSumo sodium,
     this.githubHttpClient,
+    PasskeyBridge? passkeyBridge,
   })  : crypto = VaultCrypto(sodium),
-        _sodium = sodium;
+        _sodium = sodium,
+        _passkeyBridge = passkeyBridge ?? MethodChannelPasskeyBridge();
 
   final SecureKeyStore secureStore;
   final LocalVaultCache cache;
   final VaultCrypto crypto;
   final SodiumSumo _sodium;
+  final PasskeyBridge _passkeyBridge;
 
   /// Test seam: lets integration tests inject an [http.MockClient] instead
   /// of hitting the real GitHub API. `null` in production uses `http`'s
@@ -99,6 +105,7 @@ class VaultRepository {
       publicKey: base64Decode(pubB64),
       secretKey: SecureKey.fromList(_sodium, base64Decode(privB64)),
     );
+    unawaited(_syncPasskeysToNative());
     return true;
   }
 
@@ -131,6 +138,7 @@ class VaultRepository {
         '${SecureKeyStoreKeys.cachedVaultKeyPrefix}$epoch',
         base64Encode(vaultKey.extractBytes()),
       );
+      unawaited(_syncPasskeysToNative());
       return true;
     } catch (_) {
       return false;
@@ -141,6 +149,32 @@ class VaultRepository {
     _vaultKey?.dispose();
     _vaultKey = null;
     _deviceKeyPair = null;
+    unawaited(_passkeyBridge.clearOnLock());
+  }
+
+  /// Pushes every passkey currently in the local cache into the shared
+  /// Keychain and the OS credential-identity store, so the credential-
+  /// provider extension can sign with them while the vault is unlocked
+  /// (plan §6). Called after every successful unlock; a no-op on platforms
+  /// without a passkey extension (Android, or before native provisioning is
+  /// set up) since [PasskeyBridge] swallows those failures itself.
+  Future<void> _syncPasskeysToNative() async {
+    final items = await cache.allItems();
+    final passkeys = items.where((i) => !i.deleted && i.data is PasskeyItemData).toList();
+    await _passkeyBridge.syncUnlocked(passkeys);
+  }
+
+  /// Drains passkeys the credential-provider extension created since the app
+  /// last ran, persisting each as a dirty local item so the next [syncNow]
+  /// pushes it to the vault repo. Safe to call whenever the vault is
+  /// unlocked; called from [syncNow] itself so it rides along with every
+  /// existing sync trigger (app start, foreground, manual "Sync Now").
+  Future<void> _drainPasskeyOutbox() async {
+    if (_deviceId == null) return;
+    final drained = await _passkeyBridge.drainOutboxAsVaultItems(deviceId: _deviceId!);
+    for (final item in drained) {
+      await cache.putItem(item, dirty: true);
+    }
   }
 
   Future<List<VaultItem>> listItems() async {
@@ -254,7 +288,7 @@ class VaultRepository {
     final deviceKeyPair = _deviceKeyPair;
     final deviceId = _deviceId;
     if (vaultKey == null || deviceKeyPair == null || deviceId == null) {
-      throw StateError('Vault must be unlocked before syncing.');
+      throw StateError('vault must be unlocked before syncing.');
     }
 
     final engine = await _ensureSyncEngine();
@@ -266,7 +300,10 @@ class VaultRepository {
         deviceId: deviceId,
       ),
     );
-    return engine.sync(vaultKey: vaultKey, epoch: epoch);
+    await _drainPasskeyOutbox();
+    final report = await engine.sync(vaultKey: vaultKey, epoch: epoch);
+    unawaited(_syncPasskeysToNative());
+    return report;
   }
 
   Future<Map<String, List<int>>> _initialRepoFiles({
@@ -374,7 +411,7 @@ class VaultRepository {
     );
     final landed = await client.updateRefFastForward(commitSha);
     if (!landed) {
-      throw StateError('Failed to register this device — the repo changed concurrently. Please retry.');
+      throw StateError('failed to register this device — the repo changed concurrently. please retry.');
     }
   }
 
@@ -423,6 +460,7 @@ class VaultRepository {
       base64Encode(vaultKey.extractBytes()),
     );
     vaultKey.dispose();
+    unawaited(_syncPasskeysToNative());
     return true;
   }
 
@@ -453,12 +491,12 @@ class VaultRepository {
     final approverKeyPair = _deviceKeyPair;
     final approverId = _deviceId;
     if (vaultKey == null || approverKeyPair == null || approverId == null) {
-      throw StateError('Vault must be unlocked to approve a device.');
+      throw StateError('vault must be unlocked to approve a device.');
     }
 
     final client = await _ensureGitHubClient();
     final headSha = await client.getHeadCommitSha();
-    if (headSha == null) throw StateError('Remote vault is not initialized yet.');
+    if (headSha == null) throw StateError('remote vault is not initialized yet.');
     final treeSha = await client.getCommitTreeSha(headSha);
 
     final wrapped = crypto.wrapVaultKeyForDevice(
@@ -500,7 +538,7 @@ class VaultRepository {
     );
     final landed = await client.updateRefFastForward(commitSha);
     if (!landed) {
-      throw StateError('Approval failed: the repo changed concurrently. Please retry.');
+      throw StateError('approval failed: the repo changed concurrently. please retry.');
     }
   }
 

@@ -58,7 +58,7 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
       backgroundColor: KavachColors.background,
       appBar: AppBar(
         backgroundColor: KavachColors.background,
-        title: const Text('Generator', style: TextStyle(color: KavachColors.textPrimary)),
+        title: const Text('generator', style: TextStyle(color: KavachColors.textPrimary)),
         iconTheme: const IconThemeData(color: KavachColors.textPrimary),
       ),
       body: SafeArea(
@@ -86,7 +86,7 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
               const SizedBox(height: 24),
               Row(
                 children: [
-                  const Text('Length', style: TextStyle(color: KavachColors.textPrimary)),
+                  const Text('length', style: TextStyle(color: KavachColors.textPrimary)),
                   Expanded(
                     child: Slider(
                       value: _length,
@@ -110,29 +110,29 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
                   ),
                 ],
               ),
-              _togglRow('Uppercase (A-Z)', _uppercase, (v) {
+              _togglRow('uppercase (A-Z)', _uppercase, (v) {
                 setState(() => _uppercase = v);
                 _regenerate();
               }),
-              _togglRow('Lowercase (a-z)', _lowercase, (v) {
+              _togglRow('lowercase (a-z)', _lowercase, (v) {
                 setState(() => _lowercase = v);
                 _regenerate();
               }),
-              _togglRow('Digits (0-9)', _digits, (v) {
+              _togglRow('digits (0-9)', _digits, (v) {
                 setState(() => _digits = v);
                 _regenerate();
               }),
-              _togglRow('Symbols (!@#\$…)', _symbols, (v) {
+              _togglRow('symbols (!@#\$…)', _symbols, (v) {
                 setState(() => _symbols = v);
                 _regenerate();
               }),
-              _togglRow('Exclude ambiguous (0 O l 1 I)', _excludeAmbiguous, (v) {
+              _togglRow('exclude ambiguous (0 O l 1 I)', _excludeAmbiguous, (v) {
                 setState(() => _excludeAmbiguous = v);
                 _regenerate();
               }),
               const SizedBox(height: 24),
               KavachButton(
-                label: 'Regenerate',
+                label: 'regenerate',
                 icon: Icons.refresh,
                 onTap: _regenerate,
                 color: KavachColors.surface,
@@ -141,21 +141,21 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
               ),
               const SizedBox(height: 12),
               KavachButton(
-                label: 'Copy to clipboard',
+                label: 'copy to clipboard',
                 icon: Icons.copy_outlined,
                 onTap: _password.isEmpty
                     ? null
                     : () {
                         Clipboard.setData(ClipboardData(text: _password));
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Copied to clipboard')),
+                          const SnackBar(content: Text('copied to clipboard')),
                         );
                       },
               ),
               if (widget.selectMode) ...[
                 const SizedBox(height: 12),
                 KavachButton(
-                  label: 'Use this password',
+                  label: 'use this password',
                   onTap: _password.isEmpty ? null : () => Navigator.of(context).pop(_password),
                 ),
               ],

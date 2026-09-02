@@ -1,0 +1,694 @@
+{
+  "builtTestProducts" : [
+    {
+      "binaryPath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.xctest/Contents/MacOS/KavachSwiftCorePackageTests",
+      "coverageBinaryPath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.xctest/Contents/MacOS/KavachSwiftCorePackageTests",
+      "packagePath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core",
+      "productName" : "KavachSwiftCorePackageTests"
+    }
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.KavachSwiftCore-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "fileList" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/sources",
+      "importPath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/AuthenticatorData.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/CBOR.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/COSEKey.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/IdentityStoreSync.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/KeychainStore.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/PasskeyAuthenticator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/PasskeyOutbox.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/PasskeyRecord.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/SharedGroup.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "KavachSwiftCore",
+      "moduleOutputPath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/Modules/KavachSwiftCore.swiftmodule",
+      "objects" : [
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/AuthenticatorData.swift.o",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/CBOR.swift.o",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/COSEKey.swift.o",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/IdentityStoreSync.swift.o",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/KeychainStore.swift.o",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyAuthenticator.swift.o",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyOutbox.swift.o",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/PasskeyRecord.swift.o",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/SharedGroup.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/include/KavachSwiftCore-Swift.h",
+        "-swift-version",
+        "5",
+        "-Xfrontend",
+        "-experimental-lazy-typecheck",
+        "-Xfrontend",
+        "-experimental-skip-all-function-bodies",
+        "-Xfrontend",
+        "-experimental-allow-module-with-compiler-errors",
+        "-Xfrontend",
+        "-empty-abi-descriptor",
+        "-I",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-L",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-plugin-path",
+        "/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "kavach_swift_core"
+      ],
+      "outputFileMapPath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/Modules/KavachSwiftCore.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : true,
+      "sources" : [
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/AuthenticatorData.swift",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/CBOR.swift",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/COSEKey.swift",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/IdentityStoreSync.swift",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/KeychainStore.swift",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/PasskeyAuthenticator.swift",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/PasskeyOutbox.swift",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/PasskeyRecord.swift",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/SharedGroup.swift"
+      ],
+      "tempsPath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.KavachSwiftCorePackageTests-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "fileList" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.build/sources",
+      "importPath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.derived/runner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/Modules/KavachSwiftCoreTests.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "KavachSwiftCorePackageTests",
+      "moduleOutputPath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/Modules/KavachSwiftCorePackageTests.swiftmodule",
+      "objects" : [
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.build/runner.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.build/include/KavachSwiftCorePackageTests-Swift.h",
+        "-Xfrontend",
+        "-experimental-lazy-typecheck",
+        "-Xfrontend",
+        "-experimental-skip-all-function-bodies",
+        "-Xfrontend",
+        "-experimental-allow-module-with-compiler-errors",
+        "-Xfrontend",
+        "-empty-abi-descriptor",
+        "-I",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-L",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-plugin-path",
+        "/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "kavach_swift_core"
+      ],
+      "outputFileMapPath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/Modules/KavachSwiftCorePackageTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : true,
+      "sources" : [
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.derived/runner.swift"
+      ],
+      "tempsPath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.KavachSwiftCoreTests-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "fileList" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCoreTests.build/sources",
+      "importPath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Tests/KavachSwiftCoreTests/AuthenticatorDataTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Tests/KavachSwiftCoreTests/CBOREncoderTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Tests/KavachSwiftCoreTests/COSEKeyTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Tests/KavachSwiftCoreTests/PasskeyAuthenticatorTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/Modules/KavachSwiftCore.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCoreTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "KavachSwiftCoreTests",
+      "moduleOutputPath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/Modules/KavachSwiftCoreTests.swiftmodule",
+      "objects" : [
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCoreTests.build/AuthenticatorDataTests.swift.o",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCoreTests.build/CBOREncoderTests.swift.o",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCoreTests.build/COSEKeyTests.swift.o",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCoreTests.build/PasskeyAuthenticatorTests.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-swift-version",
+        "5",
+        "-Xfrontend",
+        "-experimental-lazy-typecheck",
+        "-Xfrontend",
+        "-experimental-skip-all-function-bodies",
+        "-Xfrontend",
+        "-experimental-allow-module-with-compiler-errors",
+        "-Xfrontend",
+        "-empty-abi-descriptor",
+        "-I",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-L",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-plugin-path",
+        "/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "kavach_swift_core"
+      ],
+      "outputFileMapPath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCoreTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/Modules/KavachSwiftCoreTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : true,
+      "sources" : [
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Tests/KavachSwiftCoreTests/AuthenticatorDataTests.swift",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Tests/KavachSwiftCoreTests/CBOREncoderTests.swift",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Tests/KavachSwiftCoreTests/COSEKeyTests.swift",
+        "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Tests/KavachSwiftCoreTests/PasskeyAuthenticatorTests.swift"
+      ],
+      "tempsPath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCoreTests.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "KavachSwiftCore" : [
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "-module-name",
+      "KavachSwiftCore",
+      "-package-name",
+      "kavach_swift_core",
+      "-c",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/AuthenticatorData.swift",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/CBOR.swift",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/COSEKey.swift",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/IdentityStoreSync.swift",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/KeychainStore.swift",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/PasskeyAuthenticator.swift",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/PasskeyOutbox.swift",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/PasskeyRecord.swift",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/SharedGroup.swift",
+      "-I",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j10",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/include/KavachSwiftCore-Swift.h",
+      "-swift-version",
+      "5",
+      "-Xfrontend",
+      "-experimental-lazy-typecheck",
+      "-Xfrontend",
+      "-experimental-skip-all-function-bodies",
+      "-Xfrontend",
+      "-experimental-allow-module-with-compiler-errors",
+      "-Xfrontend",
+      "-empty-abi-descriptor",
+      "-I",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-L",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-plugin-path",
+      "/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "kavach_swift_core",
+      "-driver-use-frontend-path",
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+    ],
+    "KavachSwiftCorePackageTests" : [
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "-module-name",
+      "KavachSwiftCorePackageTests",
+      "-package-name",
+      "kavach_swift_core",
+      "-c",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.derived/runner.swift",
+      "-I",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j10",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.build/include/KavachSwiftCorePackageTests-Swift.h",
+      "-Xfrontend",
+      "-experimental-lazy-typecheck",
+      "-Xfrontend",
+      "-experimental-skip-all-function-bodies",
+      "-Xfrontend",
+      "-experimental-allow-module-with-compiler-errors",
+      "-Xfrontend",
+      "-empty-abi-descriptor",
+      "-I",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-L",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-plugin-path",
+      "/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "kavach_swift_core",
+      "-driver-use-frontend-path",
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+    ],
+    "KavachSwiftCoreTests" : [
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "-module-name",
+      "KavachSwiftCoreTests",
+      "-package-name",
+      "kavach_swift_core",
+      "-c",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Tests/KavachSwiftCoreTests/AuthenticatorDataTests.swift",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Tests/KavachSwiftCoreTests/CBOREncoderTests.swift",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Tests/KavachSwiftCoreTests/COSEKeyTests.swift",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Tests/KavachSwiftCoreTests/PasskeyAuthenticatorTests.swift",
+      "-I",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j10",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-swift-version",
+      "5",
+      "-Xfrontend",
+      "-experimental-lazy-typecheck",
+      "-Xfrontend",
+      "-experimental-skip-all-function-bodies",
+      "-Xfrontend",
+      "-experimental-allow-module-with-compiler-errors",
+      "-Xfrontend",
+      "-empty-abi-descriptor",
+      "-I",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-L",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-plugin-path",
+      "/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "kavach_swift_core",
+      "-driver-use-frontend-path",
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "KavachSwiftCore" : [
+
+    ],
+    "KavachSwiftCorePackageTests" : [
+      "KavachSwiftCoreTests",
+      "KavachSwiftCore"
+    ],
+    "KavachSwiftCoreTests" : [
+      "KavachSwiftCore"
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+
+  },
+  "traitConfiguration" : {
+    "default" : [
+      {
+
+      }
+    ]
+  },
+  "writeCommands" : {
+    "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/AuthenticatorData.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/CBOR.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/COSEKey.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/IdentityStoreSync.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/KeychainStore.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/PasskeyAuthenticator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/PasskeyOutbox.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/PasskeyRecord.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Sources/KavachSwiftCore/SharedGroup.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCore.build/sources"
+    },
+    "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.derived/runner.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.build/sources"
+    },
+    "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCoreTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Tests/KavachSwiftCoreTests/AuthenticatorDataTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Tests/KavachSwiftCoreTests/CBOREncoderTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Tests/KavachSwiftCoreTests/COSEKeyTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/Tests/KavachSwiftCoreTests/PasskeyAuthenticatorTests.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCoreTests.build/sources"
+    },
+    "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+    }
+  }
+}

@@ -36,13 +36,13 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Create your vault'), findsOneWidget);
+    expect(find.text('create your vault'), findsOneWidget);
 
     await tester.enterText(find.byType(TextField).at(0), 'correct horse battery staple');
     await tester.enterText(find.byType(TextField).at(1), 'correct horse battery staple');
-    await tester.ensureVisible(find.text('Create vault'));
+    await tester.ensureVisible(find.text('create vault'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Create vault'));
+    await tester.tap(find.text('create vault'));
 
     // Give createVault() real wall-clock time (Argon2id + real Keychain
     // I/O), then pump a bunch of frames instead of pumpAndSettle(), so a
@@ -52,8 +52,8 @@ void main() {
       await tester.pump(const Duration(milliseconds: 200));
     }
 
-    expect(find.text('Create your vault'), findsNothing, reason: 'still stuck on create-vault screen');
-    expect(find.text('No items yet.\nTap + to add your first password.'), findsOneWidget);
+    expect(find.text('create your vault'), findsNothing, reason: 'still stuck on create-vault screen');
+    expect(find.text('no items yet.\ntap + to add your first password.'), findsOneWidget);
 
     await secureStore.deleteAll();
   });

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'kavach_colors.dart';
 
-/// An uppercase, letter-spaced, muted-gray caption, matching CRED's section
-/// headers ("FOR YOU", "MONEY MATTERS") and field captions (plan §8).
+/// A letter-spaced, muted-gray caption, matching CRED's section headers and
+/// field captions (plan §8). Renders whatever case [text] is passed in —
+/// Kavach's UI copy is all lower case (plan §10 design note), so callers
+/// should pass lower-case text rather than relying on this widget to
+/// transform it.
 class KavachSectionLabel extends StatelessWidget {
   const KavachSectionLabel(this.text, {super.key});
 
@@ -12,7 +15,7 @@ class KavachSectionLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text.toUpperCase(),
+      text,
       style: const TextStyle(
         color: KavachColors.textSecondary,
         fontSize: 12,

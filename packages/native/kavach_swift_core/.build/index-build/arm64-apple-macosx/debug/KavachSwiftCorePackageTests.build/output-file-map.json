@@ -1,0 +1,11 @@
+{
+  "": {
+    "swift-dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.build/primary.swiftdeps"
+  },
+  "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.derived/runner.swift": {
+    "dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.build/runner.d",
+    "object": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.build/runner.swift.o",
+    "swiftmodule": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.build/runner~partial.swiftmodule",
+    "swift-dependencies": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.build/runner.swiftdeps",
+    "diagnostics": "/Users/0xsubi/lab/kavach/packages/native/kavach_swift_core/.build/index-build/arm64-apple-macosx/debug/KavachSwiftCorePackageTests.build/runner.dia"  }
+}

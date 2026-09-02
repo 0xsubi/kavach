@@ -61,7 +61,7 @@ class _JoinVaultScreenState extends ConsumerState<JoinVaultScreen> {
       appBar: AppBar(
         backgroundColor: KavachColors.background,
         iconTheme: const IconThemeData(color: KavachColors.textPrimary),
-        title: const Text('Join a vault', style: TextStyle(color: KavachColors.textPrimary)),
+        title: const Text('join a vault', style: TextStyle(color: KavachColors.textPrimary)),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -70,8 +70,8 @@ class _JoinVaultScreenState extends ConsumerState<JoinVaultScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Text(
-                'Enter the same private GitHub repo another one of your devices already '
-                'uses. That device will need to approve you before this one can unlock.',
+                'enter the same private GitHub repo another one of your devices already '
+                'uses. that device will need to approve you before this one can unlock.',
                 style: TextStyle(color: KavachColors.textSecondary, fontSize: 13),
               ),
               const SizedBox(height: 24),
@@ -79,14 +79,14 @@ class _JoinVaultScreenState extends ConsumerState<JoinVaultScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _field('Repo owner', _owner, hint: 'e.g. sudhabindu1'),
+                    _field('repo owner', _owner, hint: 'e.g. sudhabindu1'),
                     const SizedBox(height: 16),
-                    _field('Repo name', _repo, hint: 'e.g. kavach-vault'),
+                    _field('repo name', _repo, hint: 'e.g. kavach-vault'),
                     const SizedBox(height: 16),
                     _field(
-                      'Personal access token',
+                      'personal access token',
                       _token,
-                      hint: 'fine-grained PAT with contents:write on this repo',
+                      hint: 'fine-grained pat with contents:write on this repo',
                       obscure: true,
                     ),
                   ],
@@ -94,7 +94,7 @@ class _JoinVaultScreenState extends ConsumerState<JoinVaultScreen> {
               ),
               const SizedBox(height: 24),
               KavachButton(
-                label: _busy ? 'Requesting…' : 'Request to join',
+                label: _busy ? 'requesting…' : 'request to join',
                 onTap: _busy ? null : _submit,
               ),
               if (error != null) ...[

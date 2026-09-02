@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kavach_core/kavach_core.dart';
 
+import '../data/biometric_authenticator.dart';
 import '../data/vault_repository.dart';
 
 enum VaultStatus { loading, needsCreation, pendingApproval, locked, unlocked }
@@ -83,7 +84,7 @@ class VaultController extends StateNotifier<VaultState> {
       final ok = await _repo.unlock();
       if (ok) {
         await _refreshUnlocked();
-        unawaited(_autoSyncOnStart());
+        unawaited(syncIfConfigured());
       }
     }
     return approved;
@@ -102,7 +103,7 @@ class VaultController extends StateNotifier<VaultState> {
     final ok = await _repo.unlock();
     if (ok) {
       await _refreshUnlocked();
-      unawaited(_autoSyncOnStart());
+      unawaited(syncIfConfigured());
     }
     return ok;
   }
@@ -111,12 +112,16 @@ class VaultController extends StateNotifier<VaultState> {
     final ok = await _repo.unlockWithMasterPassword(masterPassword);
     if (ok) {
       await _refreshUnlocked();
-      unawaited(_autoSyncOnStart());
+      unawaited(syncIfConfigured());
     }
     return ok;
   }
 
-  Future<void> _autoSyncOnStart() async {
+  /// Drives both auto-sync-on-unlock and background/foreground sync
+  /// triggers (plan §10 phase 3) with one code path. No-ops if GitHub sync
+  /// isn't configured yet, or if a sync is already in flight.
+  Future<void> syncIfConfigured() async {
+    if (state.isSyncing) return;
     if (await _repo.hasGitHubConfigured()) {
       await syncNow();
     }
@@ -187,4 +192,11 @@ final vaultRepositoryProvider = Provider<VaultRepository>((ref) {
 
 final vaultControllerProvider = StateNotifierProvider<VaultController, VaultState>(
   (ref) => VaultController(ref.watch(vaultRepositoryProvider)),
+);
+
+/// Overridden with a fake in integration tests — the real implementation
+/// shows a system Touch ID/password dialog that would otherwise block
+/// automated `flutter test -d macos` runs.
+final biometricAuthenticatorProvider = Provider<BiometricAuthenticator>(
+  (ref) => LocalAuthBiometricAuthenticator(),
 );

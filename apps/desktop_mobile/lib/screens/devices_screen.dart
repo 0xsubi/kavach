@@ -53,11 +53,11 @@ class _DevicesScreenState extends ConsumerState<DevicesScreen> {
       appBar: AppBar(
         backgroundColor: KavachColors.background,
         iconTheme: const IconThemeData(color: KavachColors.textPrimary),
-        title: const Text('Devices', style: TextStyle(color: KavachColors.textPrimary)),
+        title: const Text('devices', style: TextStyle(color: KavachColors.textPrimary)),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: 'refresh',
             onPressed: _load,
           ),
         ],
@@ -85,7 +85,7 @@ class _DevicesScreenState extends ConsumerState<DevicesScreen> {
             if (devices.isEmpty) {
               return const Center(
                 child: Text(
-                  'No devices found on the remote vault yet.\nSync at least once first.',
+                  'no devices found on the remote vault yet.\nsync at least once first.',
                   textAlign: TextAlign.center,
                   style: TextStyle(color: KavachColors.textSecondary),
                 ),
@@ -156,7 +156,7 @@ class _DeviceTile extends StatelessWidget {
           ),
           if (pending)
             KavachButton(
-              label: busy ? '…' : 'Approve',
+              label: busy ? '…' : 'approve',
               onTap: busy ? null : onApprove,
             ),
         ],

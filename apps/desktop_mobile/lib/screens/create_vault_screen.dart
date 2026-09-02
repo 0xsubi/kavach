@@ -28,11 +28,11 @@ class _CreateVaultScreenState extends ConsumerState<CreateVaultScreen> {
   Future<void> _submit() async {
     final password = _passwordController.text;
     if (password.length < 8) {
-      setState(() => _error = 'Master password must be at least 8 characters.');
+      setState(() => _error = 'master password must be at least 8 characters.');
       return;
     }
     if (password != _confirmController.text) {
-      setState(() => _error = 'Passwords do not match.');
+      setState(() => _error = 'passwords do not match.');
       return;
     }
     setState(() {
@@ -57,7 +57,7 @@ class _CreateVaultScreenState extends ConsumerState<CreateVaultScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Text(
-                    'Kavach',
+                    'kavach',
                     style: TextStyle(
                       color: KavachColors.primary,
                       fontSize: 40,
@@ -67,7 +67,7 @@ class _CreateVaultScreenState extends ConsumerState<CreateVaultScreen> {
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'Create your vault',
+                    'create your vault',
                     style: TextStyle(color: KavachColors.textSecondary, fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
@@ -76,7 +76,7 @@ class _CreateVaultScreenState extends ConsumerState<CreateVaultScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const KavachSectionLabel('Master password'),
+                        const KavachSectionLabel('master password'),
                         const SizedBox(height: 8),
                         TextField(
                           controller: _passwordController,
@@ -85,7 +85,7 @@ class _CreateVaultScreenState extends ConsumerState<CreateVaultScreen> {
                           decoration: const InputDecoration(border: OutlineInputBorder()),
                         ),
                         const SizedBox(height: 16),
-                        const KavachSectionLabel('Confirm password'),
+                        const KavachSectionLabel('confirm password'),
                         const SizedBox(height: 8),
                         TextField(
                           controller: _confirmController,
@@ -103,13 +103,13 @@ class _CreateVaultScreenState extends ConsumerState<CreateVaultScreen> {
                   ),
                   const SizedBox(height: 24),
                   KavachButton(
-                    label: _busy ? 'Creating…' : 'Create vault',
+                    label: _busy ? 'creating…' : 'create vault',
                     onTap: _busy ? null : _submit,
                   ),
                   const SizedBox(height: 12),
                   const Text(
-                    'This master password is the only way to recover your vault if every '
-                    'device is lost. Write it down somewhere safe.',
+                    'this master password is the only way to recover your vault if every '
+                    'device is lost. write it down somewhere safe.',
                     style: TextStyle(color: KavachColors.textSecondary, fontSize: 12),
                     textAlign: TextAlign.center,
                   ),
@@ -120,7 +120,7 @@ class _CreateVaultScreenState extends ConsumerState<CreateVaultScreen> {
                         MaterialPageRoute(builder: (_) => const JoinVaultScreen()),
                       ),
                       child: const Text(
-                        'Already have a vault? Join with another device\'s approval',
+                        'already have a vault? join with another device\'s approval',
                         style: TextStyle(color: KavachColors.accent, fontSize: 13),
                       ),
                     ),

@@ -21,15 +21,39 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		004BCB252B80AB36B0A6E7E7 /* SharedGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C0B9508E48FE8FBBC3214 /* SharedGroup.swift */; };
+		008C3E5C9666549A21D374A7 /* PasskeyRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7809DFEFE066CDAC6FFF404D /* PasskeyRecord.swift */; };
+		1441185CABF98392DB4BABB2 /* PasskeyRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7809DFEFE066CDAC6FFF404D /* PasskeyRecord.swift */; };
+		28AFD367F608D2B297D5022C /* PasskeyOutbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF096255439DE5E9A8BB3D61 /* PasskeyOutbox.swift */; };
 		331C80D8294CF71000263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C80D7294CF71000263BE5 /* RunnerTests.swift */; };
 		335BBD1B22A9A15E00E9071D /* GeneratedPluginRegistrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335BBD1A22A9A15E00E9071D /* GeneratedPluginRegistrant.swift */; };
 		33CC10F12044A3C60003C045 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CC10F02044A3C60003C045 /* AppDelegate.swift */; };
 		33CC10F32044A3C60003C045 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33CC10F22044A3C60003C045 /* Assets.xcassets */; };
 		33CC10F62044A3C60003C045 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33CC10F42044A3C60003C045 /* MainMenu.xib */; };
 		33CC11132044BFA00003C045 /* MainFlutterWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CC11122044BFA00003C045 /* MainFlutterWindow.swift */; };
+		345B77DC053FE7AE69F9E1F2 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E22C4F8248686F6F5A165E6 /* KeychainStore.swift */; };
 		46595719E471D88C3CACE756 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D39AA6241EEE1F5A8808ADC /* Pods_Runner.framework */; };
+		5AE6EB62FC093C70B8DABFB7 /* PasskeyOutbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF096255439DE5E9A8BB3D61 /* PasskeyOutbox.swift */; };
+		602FF1682B69AF306E4F96F0 /* PasskeyBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABEC9846374AB0C2768C09 /* PasskeyBridge.swift */; };
+		66CD7818321C6E09ACE8912F /* COSEKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AB6726BD432FEB803BCBEC /* COSEKey.swift */; };
+		6819927987820240F9C8C10B /* ConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB550121A44AC694127EE44 /* ConfirmationViewController.swift */; };
+		69AD4D25B13DF0BFB4B06EB1 /* IdentityStoreSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF809851A8EAE4E4ECBA233 /* IdentityStoreSync.swift */; };
 		78A318202AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 78A3181F2AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage */; };
+		84566CF70952462BD133301F /* CBOR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A028D2B799502369A83513 /* CBOR.swift */; };
+		8730EEB70FFC6BDB67C21D0E /* PasskeyAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7477C0823436C9696C08E6 /* PasskeyAuthenticator.swift */; };
+		89CE482524944E685230AD4C /* CredentialProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB9BE03B1C16DDB98168B75 /* CredentialProviderViewController.swift */; };
+		8F8EAAC2082A926E77A37374 /* KavachCredentialProvider.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A29B2682197D0BE0CDD5F297 /* KavachCredentialProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B355FA8905B3478524DF7569 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4029A3EF4E84946706EC166A /* Cocoa.framework */; };
+		B6ED941BE89E9E57A2FF295B /* CredentialPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708374DF4D4C6EBA3F79DE99 /* CredentialPickerViewController.swift */; };
+		CD3BD967EF12D0ED5107C8AE /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E22C4F8248686F6F5A165E6 /* KeychainStore.swift */; };
+		CD85B885D489149781991E68 /* AuthenticatorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3A2643D8D85A07F6826CD0 /* AuthenticatorData.swift */; };
+		D677992FCA2F6DBADC1CEF13 /* COSEKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AB6726BD432FEB803BCBEC /* COSEKey.swift */; };
+		E6698C705CFC58F08010EDEE /* CBOR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A028D2B799502369A83513 /* CBOR.swift */; };
+		F0AD427FDDE2C0017544F3FB /* SharedGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C0B9508E48FE8FBBC3214 /* SharedGroup.swift */; };
 		F11AC340D55C84AB81065EF1 /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 287E1DCF1EB57740F883E7C0 /* Pods_RunnerTests.framework */; };
+		F47ACC22DAA48B1B244CC79E /* AuthenticatorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3A2643D8D85A07F6826CD0 /* AuthenticatorData.swift */; };
+		F6A9E9C44BC03D209D163AFF /* IdentityStoreSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF809851A8EAE4E4ECBA233 /* IdentityStoreSync.swift */; };
+		F86E013E2C38DBF30D9D1DFE /* PasskeyAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7477C0823436C9696C08E6 /* PasskeyAuthenticator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +71,13 @@
 			remoteGlobalIDString = 33CC111A2044C6BA0003C045;
 			remoteInfo = FLX;
 		};
+		E28B85316277A1850BEEA6DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33CC10E52044A3C60003C045 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ACB3677F8F368A7ADB6AF8C2;
+			remoteInfo = KavachCredentialProvider;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -60,11 +91,22 @@
 			name = "Bundle Framework";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D5ADB35EB0D08C092318A183 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		157FCD61EC815FCB095EF132 /* Pods-RunnerTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile.xcconfig"; sourceTree = "<group>"; };
 		1D39AA6241EEE1F5A8808ADC /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1EB9BE03B1C16DDB98168B75 /* CredentialProviderViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CredentialProviderViewController.swift; sourceTree = "<group>"; };
 		287E1DCF1EB57740F883E7C0 /* Pods_RunnerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RunnerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		296040A00595C9DFCEFE1D3F /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		331C80D5294CF71000263BE5 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,13 +125,29 @@
 		33E51913231747F40026EE4D /* DebugProfile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DebugProfile.entitlements; sourceTree = "<group>"; };
 		33E51914231749380026EE4D /* Release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Release.entitlements; sourceTree = "<group>"; };
 		33E5194F232828860026EE4D /* AppInfo.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AppInfo.xcconfig; sourceTree = "<group>"; };
+		4029A3EF4E84946706EC166A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		44A4B6728BB39A0D59472B85 /* KavachCredentialProvider.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = KavachCredentialProvider.entitlements; sourceTree = "<group>"; };
+		4EF809851A8EAE4E4ECBA233 /* IdentityStoreSync.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IdentityStoreSync.swift; sourceTree = "<group>"; };
 		53E815ED87AEDEDEC026E5D2 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
+		56A028D2B799502369A83513 /* CBOR.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CBOR.swift; sourceTree = "<group>"; };
 		58619210D2E755E69310E71F /* Pods-RunnerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release.xcconfig"; sourceTree = "<group>"; };
+		5E22C4F8248686F6F5A165E6 /* KeychainStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
+		708374DF4D4C6EBA3F79DE99 /* CredentialPickerViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CredentialPickerViewController.swift; sourceTree = "<group>"; };
 		761AAAD51CE65DD559C0A1EF /* Pods-RunnerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		762ACE39B57048E534A4FAD5 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
+		7809DFEFE066CDAC6FFF404D /* PasskeyRecord.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasskeyRecord.swift; sourceTree = "<group>"; };
 		78E0A7A72DC9AD7400C4905E /* FlutterGeneratedPluginSwiftPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FlutterGeneratedPluginSwiftPackage; path = ephemeral/Packages/FlutterGeneratedPluginSwiftPackage; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		849C0B9508E48FE8FBBC3214 /* SharedGroup.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SharedGroup.swift; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		A29B2682197D0BE0CDD5F297 /* KavachCredentialProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = KavachCredentialProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8AB6726BD432FEB803BCBEC /* COSEKey.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = COSEKey.swift; sourceTree = "<group>"; };
+		ABB550121A44AC694127EE44 /* ConfirmationViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfirmationViewController.swift; sourceTree = "<group>"; };
+		AF096255439DE5E9A8BB3D61 /* PasskeyOutbox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasskeyOutbox.swift; sourceTree = "<group>"; };
+		BB8EFD762B7F2203378EE8F5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE7477C0823436C9696C08E6 /* PasskeyAuthenticator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasskeyAuthenticator.swift; sourceTree = "<group>"; };
+		EFABEC9846374AB0C2768C09 /* PasskeyBridge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasskeyBridge.swift; sourceTree = "<group>"; };
+		FE3A2643D8D85A07F6826CD0 /* AuthenticatorData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AuthenticatorData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +165,14 @@
 			files = (
 				78A318202AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage in Frameworks */,
 				46595719E471D88C3CACE756 /* Pods_Runner.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		663A56A90E19607833449845 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B355FA8905B3478524DF7569 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +207,8 @@
 				33CC10EE2044A3C60003C045 /* Products */,
 				D73912EC22F37F3D000D13A0 /* Frameworks */,
 				AE4984C0BDFF50E18DFE57CB /* Pods */,
+				ECDD4537E49606A5E89F0D8D /* KavachSwiftCore */,
+				5F09279EC76424D16BBB3242 /* KavachCredentialProvider */,
 			);
 			sourceTree = "<group>";
 		};
@@ -149,6 +217,7 @@
 			children = (
 				33CC10ED2044A3C60003C045 /* desktop_mobile.app */,
 				331C80D5294CF71000263BE5 /* RunnerTests.xctest */,
+				A29B2682197D0BE0CDD5F297 /* KavachCredentialProvider.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -185,8 +254,31 @@
 				33E51914231749380026EE4D /* Release.entitlements */,
 				33CC11242044D66E0003C045 /* Resources */,
 				33BA886A226E78AF003329D5 /* Configs */,
+				EFABEC9846374AB0C2768C09 /* PasskeyBridge.swift */,
 			);
 			path = Runner;
+			sourceTree = "<group>";
+		};
+		5F09279EC76424D16BBB3242 /* KavachCredentialProvider */ = {
+			isa = PBXGroup;
+			children = (
+				BB8EFD762B7F2203378EE8F5 /* Info.plist */,
+				44A4B6728BB39A0D59472B85 /* KavachCredentialProvider.entitlements */,
+				1EB9BE03B1C16DDB98168B75 /* CredentialProviderViewController.swift */,
+				936A4E61BD2C33DADAD6488D /* Views */,
+			);
+			name = KavachCredentialProvider;
+			path = KavachCredentialProvider;
+			sourceTree = "<group>";
+		};
+		936A4E61BD2C33DADAD6488D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				ABB550121A44AC694127EE44 /* ConfirmationViewController.swift */,
+				708374DF4D4C6EBA3F79DE99 /* CredentialPickerViewController.swift */,
+			);
+			name = Views;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		AE4984C0BDFF50E18DFE57CB /* Pods */ = {
@@ -203,13 +295,39 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		AEBA71A3DCBBA16133B69C61 /* OS X */ = {
+			isa = PBXGroup;
+			children = (
+				4029A3EF4E84946706EC166A /* Cocoa.framework */,
+			);
+			name = "OS X";
+			sourceTree = "<group>";
+		};
 		D73912EC22F37F3D000D13A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				1D39AA6241EEE1F5A8808ADC /* Pods_Runner.framework */,
 				287E1DCF1EB57740F883E7C0 /* Pods_RunnerTests.framework */,
+				AEBA71A3DCBBA16133B69C61 /* OS X */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ECDD4537E49606A5E89F0D8D /* KavachSwiftCore */ = {
+			isa = PBXGroup;
+			children = (
+				FE3A2643D8D85A07F6826CD0 /* AuthenticatorData.swift */,
+				56A028D2B799502369A83513 /* CBOR.swift */,
+				A8AB6726BD432FEB803BCBEC /* COSEKey.swift */,
+				4EF809851A8EAE4E4ECBA233 /* IdentityStoreSync.swift */,
+				5E22C4F8248686F6F5A165E6 /* KeychainStore.swift */,
+				DE7477C0823436C9696C08E6 /* PasskeyAuthenticator.swift */,
+				AF096255439DE5E9A8BB3D61 /* PasskeyOutbox.swift */,
+				7809DFEFE066CDAC6FFF404D /* PasskeyRecord.swift */,
+				849C0B9508E48FE8FBBC3214 /* SharedGroup.swift */,
+			);
+			name = KavachSwiftCore;
+			path = ../../../packages/native/kavach_swift_core/Sources/KavachSwiftCore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,6 +361,7 @@
 				33CC10EA2044A3C60003C045 /* Frameworks */,
 				33CC10EB2044A3C60003C045 /* Resources */,
 				33CC110E2044A8840003C045 /* Bundle Framework */,
+				D5ADB35EB0D08C092318A183 /* Embed Foundation Extensions */,
 				3399D490228B24CF009A79C7 /* ShellScript */,
 				3CA034E2B2FCE3204EC8E9E6 /* [CP] Embed Pods Frameworks */,
 			);
@@ -258,6 +377,23 @@
 			productName = Runner;
 			productReference = 33CC10ED2044A3C60003C045 /* desktop_mobile.app */;
 			productType = "com.apple.product-type.application";
+		};
+		ACB3677F8F368A7ADB6AF8C2 /* KavachCredentialProvider */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F300C0DE900095E62BB32264 /* Build configuration list for PBXNativeTarget "KavachCredentialProvider" */;
+			buildPhases = (
+				4CEE48F1C0E836A844360924 /* Sources */,
+				663A56A90E19607833449845 /* Frameworks */,
+				56A31A9972ED8CA980F530D9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KavachCredentialProvider;
+			productName = KavachCredentialProvider;
+			productReference = A29B2682197D0BE0CDD5F297 /* KavachCredentialProvider.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -309,6 +445,7 @@
 				33CC10EC2044A3C60003C045 /* Runner */,
 				331C80D4294CF70F00263BE5 /* RunnerTests */,
 				33CC111A2044C6BA0003C045 /* Flutter Assemble */,
+				ACB3677F8F368A7ADB6AF8C2 /* KavachCredentialProvider */,
 			);
 		};
 /* End PBXProject section */
@@ -327,6 +464,13 @@
 			files = (
 				33CC10F32044A3C60003C045 /* Assets.xcassets in Resources */,
 				33CC10F62044A3C60003C045 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56A31A9972ED8CA980F530D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +594,35 @@
 				33CC11132044BFA00003C045 /* MainFlutterWindow.swift in Sources */,
 				33CC10F12044A3C60003C045 /* AppDelegate.swift in Sources */,
 				335BBD1B22A9A15E00E9071D /* GeneratedPluginRegistrant.swift in Sources */,
+				F47ACC22DAA48B1B244CC79E /* AuthenticatorData.swift in Sources */,
+				E6698C705CFC58F08010EDEE /* CBOR.swift in Sources */,
+				66CD7818321C6E09ACE8912F /* COSEKey.swift in Sources */,
+				F6A9E9C44BC03D209D163AFF /* IdentityStoreSync.swift in Sources */,
+				345B77DC053FE7AE69F9E1F2 /* KeychainStore.swift in Sources */,
+				8730EEB70FFC6BDB67C21D0E /* PasskeyAuthenticator.swift in Sources */,
+				5AE6EB62FC093C70B8DABFB7 /* PasskeyOutbox.swift in Sources */,
+				1441185CABF98392DB4BABB2 /* PasskeyRecord.swift in Sources */,
+				004BCB252B80AB36B0A6E7E7 /* SharedGroup.swift in Sources */,
+				602FF1682B69AF306E4F96F0 /* PasskeyBridge.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CEE48F1C0E836A844360924 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89CE482524944E685230AD4C /* CredentialProviderViewController.swift in Sources */,
+				6819927987820240F9C8C10B /* ConfirmationViewController.swift in Sources */,
+				B6ED941BE89E9E57A2FF295B /* CredentialPickerViewController.swift in Sources */,
+				CD85B885D489149781991E68 /* AuthenticatorData.swift in Sources */,
+				84566CF70952462BD133301F /* CBOR.swift in Sources */,
+				D677992FCA2F6DBADC1CEF13 /* COSEKey.swift in Sources */,
+				69AD4D25B13DF0BFB4B06EB1 /* IdentityStoreSync.swift in Sources */,
+				CD3BD967EF12D0ED5107C8AE /* KeychainStore.swift in Sources */,
+				F86E013E2C38DBF30D9D1DFE /* PasskeyAuthenticator.swift in Sources */,
+				28AFD367F608D2B297D5022C /* PasskeyOutbox.swift in Sources */,
+				008C3E5C9666549A21D374A7 /* PasskeyRecord.swift in Sources */,
+				F0AD427FDDE2C0017544F3FB /* SharedGroup.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,6 +639,12 @@
 			target = 33CC111A2044C6BA0003C045 /* Flutter Assemble */;
 			targetProxy = 33CC111F2044C79F0003C045 /* PBXContainerItemProxy */;
 		};
+		5D66119A3966F0F5667FDFDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KavachCredentialProvider;
+			target = ACB3677F8F368A7ADB6AF8C2 /* KavachCredentialProvider */;
+			targetProxy = E28B85316277A1850BEEA6DA /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -481,6 +660,27 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		062CABDFC1F527EB6B4F1790 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = KavachCredentialProvider/KavachCredentialProvider.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPER_DIR = "/Applications/Xcode-beta.app/Contents/Developer";
+				DEVELOPMENT_TEAM = 75X6D6S85M;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = KavachCredentialProvider/Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kavach.desktopMobile.KavachCredentialProvider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		331C80DB294CF71000263BE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 761AAAD51CE65DD559C0A1EF /* Pods-RunnerTests.debug.xcconfig */;
@@ -557,6 +757,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPER_DIR = "/Applications/Xcode-beta.app/Contents/Developer";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -633,6 +834,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPER_DIR = "/Applications/Xcode-beta.app/Contents/Developer";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -689,6 +891,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPER_DIR = "/Applications/Xcode-beta.app/Contents/Developer";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -762,6 +965,48 @@
 			};
 			name = Release;
 		};
+		B873658072627E0B8DDFF599 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = KavachCredentialProvider/KavachCredentialProvider.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPER_DIR = "/Applications/Xcode-beta.app/Contents/Developer";
+				DEVELOPMENT_TEAM = 75X6D6S85M;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = KavachCredentialProvider/Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kavach.desktopMobile.KavachCredentialProvider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F9A41513C4810B662DF259B2 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = KavachCredentialProvider/KavachCredentialProvider.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPER_DIR = "/Applications/Xcode-beta.app/Contents/Developer";
+				DEVELOPMENT_TEAM = 75X6D6S85M;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = KavachCredentialProvider/Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kavach.desktopMobile.KavachCredentialProvider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Profile;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -801,6 +1046,16 @@
 				33CC111C2044C6BA0003C045 /* Debug */,
 				33CC111D2044C6BA0003C045 /* Release */,
 				338D0CEB231458BD00FA5F75 /* Profile */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F300C0DE900095E62BB32264 /* Build configuration list for PBXNativeTarget "KavachCredentialProvider" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				062CABDFC1F527EB6B4F1790 /* Release */,
+				B873658072627E0B8DDFF599 /* Debug */,
+				F9A41513C4810B662DF259B2 /* Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

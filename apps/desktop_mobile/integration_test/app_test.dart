@@ -1,3 +1,4 @@
+import 'package:desktop_mobile/data/biometric_authenticator.dart';
 import 'package:desktop_mobile/data/vault_repository.dart';
 import 'package:desktop_mobile/main.dart';
 import 'package:desktop_mobile/state/vault_controller.dart';
@@ -28,6 +29,17 @@ class _FakeSecureKeyStore implements SecureKeyStore {
   Future<void> deleteAll() async => _values.clear();
 }
 
+/// Reports biometrics as unavailable, so `UnlockScreen` falls straight
+/// through to the normal cached-vault-key unlock path instead of showing a
+/// real system Touch ID/password prompt during this automated test.
+class _FakeBiometricAuthenticator implements BiometricAuthenticator {
+  @override
+  Future<bool> isAvailable() async => false;
+
+  @override
+  Future<bool> authenticate() async => true;
+}
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
@@ -42,37 +54,40 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [vaultRepositoryProvider.overrideWithValue(repository)],
+        overrides: [
+          vaultRepositoryProvider.overrideWithValue(repository),
+          biometricAuthenticatorProvider.overrideWithValue(_FakeBiometricAuthenticator()),
+        ],
         child: const KavachApp(),
       ),
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Create your vault'), findsOneWidget);
+    expect(find.text('create your vault'), findsOneWidget);
 
     await tester.enterText(find.byType(TextField).at(0), 'correct horse battery staple');
     await tester.enterText(find.byType(TextField).at(1), 'correct horse battery staple');
-    await tester.ensureVisible(find.text('Create vault'));
+    await tester.ensureVisible(find.text('create vault'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Create vault'));
+    await tester.tap(find.text('create vault'));
     await tester.pumpAndSettle();
 
-    expect(find.text('No items yet.\nTap + to add your first password.'), findsOneWidget);
+    expect(find.text('no items yet.\ntap + to add your first password.'), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.add));
     await tester.pumpAndSettle();
-    expect(find.text('New item'), findsOneWidget);
+    expect(find.text('new item'), findsOneWidget);
 
     final fields = find.byType(TextField);
     await tester.enterText(fields.at(0), 'GitHub');
     await tester.enterText(fields.at(1), 'sudhabindu1@gmail.com');
     await tester.enterText(fields.at(2), 's3cr3t-p@ssw0rd');
-    await tester.ensureVisible(find.text('Save'));
+    await tester.ensureVisible(find.text('save'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Save'));
+    await tester.tap(find.text('save'));
     await tester.pumpAndSettle();
 
-    expect(find.text('New item'), findsNothing);
+    expect(find.text('new item'), findsNothing);
     expect(find.text('GitHub'), findsOneWidget);
     expect(find.text('sudhabindu1@gmail.com'), findsOneWidget);
 
