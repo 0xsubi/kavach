@@ -1,0 +1,16 @@
+{
+  "name": "kavach-extension-shell",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TS/MV3 shell for the Kavach browser extension: content scripts + background relay, hosting the Flutter-web popup in a side panel.",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.280",
+    "esbuild": "^0.28.2",
+    "typescript": "^5.6.3"
+  }
+}

@@ -75,6 +75,14 @@ class GitHubClient {
       'Authorization': 'Bearer ${session.token}',
       'Accept': 'application/vnd.github+json',
       'X-GitHub-Api-Version': '2022-11-28',
+      // getHeadCommitSha() polls a mutable ref (unlike every other GET here,
+      // which addresses immutable, content-hashed blobs/trees/commits) —
+      // on native platforms Dart's HTTP stack never caches GET responses,
+      // but on web it goes through the browser's fetch(), which does. A
+      // cached stale ref read is exactly what makes device-approval
+      // polling (checkJoinApproval) see "not approved yet" even after a
+      // real approval has landed. Harmless to send everywhere.
+      'Cache-Control': 'no-cache, no-store',
     };
   }
 
