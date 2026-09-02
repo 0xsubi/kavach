@@ -10,7 +10,7 @@ pubspec.lock
 !apps/**/pubspec.lock
 *.g.dart
 *.freezed.dart
- packages/native/kavach_swift_core/.build/out
+packages/native/**/.build/
 
 # melos
 pubspec_overrides.yaml
