@@ -79,7 +79,7 @@ class _JoinVaultScreenState extends ConsumerState<JoinVaultScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _field('repo owner', _owner, hint: 'e.g. sudhabindu1'),
+                    _field('repo owner', _owner, hint: 'e.g. your-username'),
                     const SizedBox(height: 16),
                     _field('repo name', _repo, hint: 'e.g. kavach-vault'),
                     const SizedBox(height: 16),
