@@ -65,45 +65,69 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       appBar: AppBar(
         backgroundColor: KavachColors.background,
         iconTheme: const IconThemeData(color: KavachColors.textPrimary),
-        title: const Text('kavach-storage sync', style: TextStyle(color: KavachColors.textPrimary, fontSize: 16)),
+        title: const Text('kavach-storage sync', style: TextStyle(color: KavachColors.textPrimary)),
       ),
       body: SafeArea(
         child: _loadingExisting
             ? const Center(child: CircularProgressIndicator(color: KavachColors.accent))
             : SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    Text(
+                      _alreadyConfigured
+                          ? 'your vault is stored, client-side encrypted, on the kavach-storage '
+                              'server below. kavach never sends plaintext to it.'
+                          : 'create a brand-new vault on a kavach-storage server you (or whoever '
+                              'hosts it) control. you\'ll need that server\'s admin token — this '
+                              'device becomes the vault\'s first, auto-approved device. kavach '
+                              'never sends plaintext to it.',
+                      style: const TextStyle(color: KavachColors.textSecondary, fontSize: 13),
+                    ),
+                    const SizedBox(height: 24),
                     KavachCard(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           _field('server url', _baseUrl, hint: 'e.g. https://kavach-storage.example.com'),
                           if (!_alreadyConfigured) ...[
-                            const SizedBox(height: 10),
-                            _field('admin token', _adminToken, hint: 'the server\'s provisioning token', obscure: true),
+                            const SizedBox(height: 16),
+                            _field('admin token', _adminToken, hint: 'the server operator\'s provisioning token', obscure: true),
                           ],
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 24),
                     KavachButton(
-                      label: _saving ? 'syncing…' : (_alreadyConfigured ? 'sync now' : 'create vault & sync'),
+                      label: _saving
+                          ? 'syncing…'
+                          : (_alreadyConfigured ? 'sync now' : 'create vault & sync'),
                       onTap: _saving ? null : (_alreadyConfigured ? _syncOnly : _saveAndSync),
                     ),
                     if (state.syncError != null) ...[
-                      const SizedBox(height: 12),
-                      Text(state.syncError!, style: const TextStyle(color: KavachColors.danger, fontSize: 12)),
+                      const SizedBox(height: 16),
+                      Text(state.syncError!, style: const TextStyle(color: KavachColors.danger)),
                     ],
-                    const SizedBox(height: 10),
+                    if (state.lastSyncReport != null) ...[
+                      const SizedBox(height: 16),
+                      Text(
+                        'last sync: ${state.lastSyncReport!.pushedItemIds.length} pushed, '
+                        '${state.lastSyncReport!.pulledItemIds.length} pulled, '
+                        '${state.lastSyncReport!.conflictCopies.length} conflict(s).',
+                        style: const TextStyle(color: KavachColors.textSecondary, fontSize: 13),
+                      ),
+                    ],
+                    const SizedBox(height: 12),
                     KavachButton(
                       label: 'devices',
                       icon: Icons.devices_outlined,
                       color: KavachColors.surface,
                       textColor: KavachColors.textPrimary,
                       outlined: true,
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const DevicesScreen())),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const DevicesScreen()),
+                      ),
                     ),
                   ],
                 ),
@@ -117,14 +141,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         KavachSectionLabel(label),
-        const SizedBox(height: 6),
+        const SizedBox(height: 8),
         TextField(
           controller: controller,
           obscureText: obscure,
           style: const TextStyle(color: KavachColors.textPrimary),
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
-            isDense: true,
             hintText: hint,
             hintStyle: const TextStyle(color: KavachColors.textSecondary),
           ),

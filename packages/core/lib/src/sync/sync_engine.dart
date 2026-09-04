@@ -8,9 +8,8 @@ import '../crypto/aad.dart';
 import '../crypto/vault_crypto.dart';
 import '../models/vault_item.dart';
 import '../storage/local_vault_cache.dart';
-import 'github_client.dart';
+import 'kavach_storage_client.dart';
 import 'merge.dart';
-import 'repo_paths.dart';
 
 /// What a [SyncEngine.sync] call actually did, surfaced to the UI so it can
 /// show e.g. "3 items pulled, 1 conflict copy created".
@@ -30,17 +29,21 @@ class SyncReport {
   bool get isNoop => pulledItemIds.isEmpty && pushedItemIds.isEmpty;
 }
 
-/// Drives "Sync Now" / auto-sync-on-start (plan §4).
+/// Drives "Sync Now" / auto-sync-on-start against `kavach-storage` (plan
+/// §4, updated for a Postgres backend — see `kavach-storage/README.md`).
 ///
 /// **Invariant this engine relies on**: whatever writes dirty items into
 /// [LocalVaultCache] (the vault repository layer, outside `core`) must bump
 /// an item's `version` by exactly 1 relative to the last version this
 /// device saw for that id when marking it dirty. That lets this engine
 /// infer the edit's base version as `item.version - 1` without needing a
-/// separate "base version" field in the cache.
+/// separate "base version" field in the cache. (This is the app-level
+/// [VaultItem.version] used by `merge.dart` — a different number from the
+/// server's own per-item `expected_version`, tracked separately via
+/// [LocalVaultCache.cachedItemVersions].)
 class SyncEngine {
   SyncEngine({
-    required this.github,
+    required this.client,
     required this.cache,
     required this.crypto,
     required this.deviceId,
@@ -48,7 +51,7 @@ class SyncEngine {
     Uuid? uuid,
   }) : _uuid = uuid ?? const Uuid();
 
-  final GitHubClient github;
+  final KavachStorageClient client;
   final LocalVaultCache cache;
   final VaultCrypto crypto;
   final String deviceId;
@@ -59,69 +62,60 @@ class SyncEngine {
     for (var attempt = 0; attempt < maxRetries; attempt++) {
       final report = await _attemptSync(vaultKey: vaultKey, epoch: epoch);
       if (report != null) return report;
-      // Ref update raced with another device; loop retries from a fresh fetch.
+      // Batch write raced with another device; loop retries from a fresh fetch.
     }
     throw StateError(
-      'Sync failed after $maxRetries attempts: the remote ref kept moving out from '
-      'under us (another device is syncing very frequently, or a retry storm bug).',
+      'Sync failed after $maxRetries attempts: the server kept rejecting our batch write '
+      '(another device is syncing very frequently, or a retry storm bug).',
     );
   }
 
   /// Returns `null` to signal "the caller should retry" after a losing race
-  /// on the ref update; otherwise returns the completed [SyncReport].
+  /// on the batch write; otherwise returns the completed [SyncReport].
   ///
   /// Local cache is deliberately left untouched until the very end, and only
-  /// mutated once (after a successful commit, or immediately for a pure pull
+  /// mutated once (after a successful write, or immediately for a pure pull
   /// with nothing to push) — so a losing race never leaves partially-applied
   /// state behind to reconcile on retry.
   Future<SyncReport?> _attemptSync({required SecureKey vaultKey, required int epoch}) async {
-    final headSha = await github.getHeadCommitSha();
-    if (headSha == null) {
-      throw StateError('Vault repo has no commits yet; run the vault-creation flow first.');
-    }
-    final cachedSha = await cache.lastSyncedCommitSha;
+    final lastRevision = await cache.lastSyncedRevision;
     final localDirty = await cache.dirtyItems();
+    final cachedVersions = await cache.cachedItemVersions();
 
-    if (headSha == cachedSha && localDirty.isEmpty) {
-      return const SyncReport(
-        pulledItemIds: [],
-        pushedItemIds: [],
-        conflictCopies: [],
-        didCommit: false,
-      );
+    final (:items, :latestRevision) = await client.listItemsSince(lastRevision);
+
+    if (items.isEmpty && localDirty.isEmpty) {
+      if (latestRevision != lastRevision) await cache.setLastSyncedRevision(latestRevision);
+      return const SyncReport(pulledItemIds: [], pushedItemIds: [], conflictCopies: [], didCommit: false);
     }
 
-    final treeSha = await github.getCommitTreeSha(headSha);
-    final remoteTree = await github.getTreeRecursive(treeSha);
-    final cachedBlobShas = await cache.cachedBlobShas();
-
-    final changedItemPaths = <String, String>{}; // path -> blobSha
-    for (final entry in remoteTree) {
-      if (!entry.path.startsWith(RepoPaths.itemsDirPrefix)) continue;
-      if (entry.sha == null) continue;
-      if (cachedBlobShas[entry.path] != entry.sha) {
-        changedItemPaths[entry.path] = entry.sha!;
-      }
-    }
-
-    // --- Pull: decrypt every remotely-changed item. ---
+    // --- Pull: decrypt every remotely-changed item, and remember its
+    // server-side row version regardless (needed as the next write's
+    // expected_version even for items we don't end up decrypting). ---
     final remoteChanged = <String, VaultItem>{};
-    for (final MapEntry(key: path, value: blobSha) in changedItemPaths.entries) {
-      final id = _idFromItemPath(path);
-      final bytes = Uint8List.fromList(await github.getBlobBytes(blobSha));
+    final newVersions = Map<String, int>.from(cachedVersions);
+    for (final raw in items) {
+      newVersions[raw.id] = raw.version;
+      final sealed = raw.ciphertext;
+      if (sealed == null) {
+        // Only a non-Kavach caller of the REST API tombstones via the
+        // server's own DELETE — see KavachStorageClient's item-section doc
+        // comment. Nothing to decrypt; the revision bump above is enough to
+        // not re-fetch this id forever.
+        continue;
+      }
       final plaintext = crypto.decryptItem(
-        sealed: bytes,
+        sealed: sealed,
         vaultKey: vaultKey,
-        aad: itemAad(itemId: id, epoch: epoch),
+        aad: itemAad(itemId: raw.id, epoch: epoch),
       );
-      final item = VaultItem.fromJson(jsonDecode(utf8.decode(plaintext)) as Map<String, dynamic>);
-      remoteChanged[id] = item;
+      remoteChanged[raw.id] = VaultItem.fromJson(jsonDecode(utf8.decode(plaintext)) as Map<String, dynamic>);
     }
 
     // --- Merge: reconcile local dirty edits against anything that changed
     // remotely at the same id. ---
     final now = DateTime.now().toUtc();
-    final toPush = <VaultItem>[]; // items to write to the repo this sync
+    final toPush = <VaultItem>[]; // items to write to the server this sync
     final toApplyLocally = <String, VaultItem>{...remoteChanged}; // id -> final item for the cache
     final conflictCopies = <VaultItem>[];
 
@@ -158,12 +152,12 @@ class SyncEngine {
     }
 
     if (toPush.isEmpty) {
-      // Pure pull: no commit needed, so no race is possible — apply directly.
+      // Pure pull: no write needed, so no race is possible — apply directly.
       for (final item in toApplyLocally.values) {
         await cache.putItem(item, dirty: false);
       }
-      await cache.setCachedBlobShas({...cachedBlobShas, ...changedItemPaths});
-      await cache.setLastSyncedCommitSha(headSha);
+      await cache.setCachedItemVersions(newVersions);
+      await cache.setLastSyncedRevision(latestRevision);
       return SyncReport(
         pulledItemIds: remoteChanged.keys.toList(),
         pushedItemIds: const [],
@@ -172,45 +166,31 @@ class SyncEngine {
       );
     }
 
-    // --- Push: build one commit for every pushed item.
-    //
-    // Ciphertext is binary, and the create-tree API's inline `content` field
-    // is treated as UTF-8 text, so each item is written via an explicit
-    // create-blob call rather than inline tree content.
-    final pushTreeEntries = <GitTreeEntry>[];
+    // --- Push: one atomic batch write for every pushed item. ---
+    final writes = <ItemWriteRequest>[];
     for (final item in toPush) {
       final sealed = crypto.encryptItem(
         plaintext: Uint8List.fromList(utf8.encode(jsonEncode(item.toJson()))),
         vaultKey: vaultKey,
         aad: itemAad(itemId: item.id, epoch: epoch),
       );
-      final blobSha = await github.createBlob(sealed);
-      pushTreeEntries.add(
-        GitTreeEntry(path: RepoPaths.item(item.id), mode: '100644', type: 'blob', sha: blobSha),
-      );
+      writes.add(ItemWriteRequest(id: item.id, ciphertext: sealed, expectedVersion: newVersions[item.id] ?? 0));
     }
 
-    final newTreeSha = await github.createTree(pushTreeEntries, baseTreeSha: treeSha);
-    final commitSha = await github.createCommit(
-      message: 'Kavach sync from $deviceId: ${toPush.length} item(s)',
-      treeSha: newTreeSha,
-      parentShas: [headSha],
-    );
-    final landed = await github.updateRefFastForward(commitSha);
-    if (!landed) {
+    final outcome = await client.batchWrite(writes);
+    if (outcome.isConflict) {
       return null; // caller retries from a fresh fetch
     }
 
+    for (final result in outcome.items!) {
+      newVersions[result.id] = result.version;
+    }
     for (final item in toApplyLocally.values) {
       await cache.putItem(item, dirty: false);
     }
-    // Blob shas for pushed paths are now stale (we know the item content,
-    // not the sha git assigned it); drop them so the next sync's tree diff
-    // re-checks those paths against HEAD rather than trusting a guess.
-    final newBlobShaCache = {...cachedBlobShas, ...changedItemPaths}
-      ..removeWhere((path, _) => toPush.any((item) => RepoPaths.item(item.id) == path));
-    await cache.setCachedBlobShas(newBlobShaCache);
-    await cache.setLastSyncedCommitSha(commitSha);
+    await cache.setCachedItemVersions(newVersions);
+    final newRevision = outcome.latestRevision! > latestRevision ? outcome.latestRevision! : latestRevision;
+    await cache.setLastSyncedRevision(newRevision);
 
     final pushedIds = toPush.map((e) => e.id).toSet();
     return SyncReport(
@@ -219,10 +199,5 @@ class SyncEngine {
       conflictCopies: conflictCopies,
       didCommit: true,
     );
-  }
-
-  String _idFromItemPath(String path) {
-    final fileName = path.split('/').last;
-    return fileName.substring(0, fileName.length - '.json.enc'.length);
   }
 }

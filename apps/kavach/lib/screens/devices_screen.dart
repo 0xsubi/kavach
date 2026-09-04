@@ -6,6 +6,8 @@ import 'package:neopop_theme/neopop_theme.dart';
 
 import '../state/vault_controller.dart';
 
+/// Lists every device registered against this vault's repo and lets the
+/// user approve any that are pending (plan §5 "new device onboarding").
 class DevicesScreen extends ConsumerStatefulWidget {
   const DevicesScreen({super.key});
 
@@ -60,47 +62,50 @@ class _DevicesScreenState extends ConsumerState<DevicesScreen> {
         context: context,
         builder: (context) => AlertDialog(
           backgroundColor: KavachColors.surface,
-          insetPadding: const EdgeInsets.all(12),
-          title: const Text('invite a device', style: TextStyle(color: KavachColors.textPrimary, fontSize: 15)),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'point the new device\'s camera at this code — it opens Kavach '
-                  'with the details filled in. expires in 15 minutes, works once.',
-                  style: TextStyle(color: KavachColors.textSecondary, fontSize: 11),
-                ),
-                const SizedBox(height: 12),
-                Center(
-                  child: KavachQrCode(
-                    data: inviteLink,
-                    size: 168,
-                    semanticLabel: 'device invite QR code',
+          title: const Text('invite a device', style: TextStyle(color: KavachColors.textPrimary)),
+          content: SizedBox(
+            width: 320,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'point the new device\'s camera at this code — it opens Kavach '
+                    'with the details already filled in. expires in 15 minutes and '
+                    'works once.',
+                    style: TextStyle(color: KavachColors.textSecondary, fontSize: 13),
                   ),
-                ),
-                const SizedBox(height: 12),
-                const Row(
-                  children: [
-                    Expanded(child: Divider(color: KavachColors.border)),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 6),
-                      child: Text(
-                        'or type them in',
-                        style: TextStyle(color: KavachColors.textSecondary, fontSize: 10),
-                      ),
+                  const SizedBox(height: 16),
+                  Center(
+                    child: KavachQrCode(
+                      data: inviteLink,
+                      size: 220,
+                      semanticLabel: 'device invite QR code',
                     ),
-                    Expanded(child: Divider(color: KavachColors.border)),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                _copyableField('server url', target.baseUrl),
-                const SizedBox(height: 8),
-                _copyableField('vault id', target.vaultId),
-                const SizedBox(height: 8),
-                _copyableField('invite token', invite.inviteToken),
-              ],
+                  ),
+                  const SizedBox(height: 16),
+                  const Row(
+                    children: [
+                      Expanded(child: Divider(color: KavachColors.border)),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(
+                          'or type them in',
+                          style: TextStyle(color: KavachColors.textSecondary, fontSize: 11),
+                        ),
+                      ),
+                      Expanded(child: Divider(color: KavachColors.border)),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  _copyableField('server url', target.baseUrl),
+                  const SizedBox(height: 8),
+                  _copyableField('vault id', target.vaultId),
+                  const SizedBox(height: 8),
+                  _copyableField('invite token', invite.inviteToken),
+                ],
+              ),
             ),
           ),
           actions: [
@@ -123,13 +128,13 @@ class _DevicesScreenState extends ConsumerState<DevicesScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: const TextStyle(color: KavachColors.textSecondary, fontSize: 10)),
+          Text(label, style: const TextStyle(color: KavachColors.textSecondary, fontSize: 12)),
           Row(
             children: [
               Expanded(
-                child: SelectableText(value, style: const TextStyle(color: KavachColors.textPrimary, fontSize: 12)),
+                child: SelectableText(value, style: const TextStyle(color: KavachColors.textPrimary, fontSize: 13)),
               ),
-              const Icon(Icons.copy, size: 14, color: KavachColors.textSecondary),
+              const Icon(Icons.copy, size: 16, color: KavachColors.textSecondary),
             ],
           ),
         ],
@@ -144,10 +149,18 @@ class _DevicesScreenState extends ConsumerState<DevicesScreen> {
       appBar: AppBar(
         backgroundColor: KavachColors.background,
         iconTheme: const IconThemeData(color: KavachColors.textPrimary),
-        title: const Text('devices', style: TextStyle(color: KavachColors.textPrimary, fontSize: 16)),
+        title: const Text('devices', style: TextStyle(color: KavachColors.textPrimary)),
         actions: [
-          IconButton(icon: const Icon(Icons.person_add_alt_outlined), tooltip: 'invite a device', onPressed: _invite),
-          IconButton(icon: const Icon(Icons.refresh), tooltip: 'refresh', onPressed: _load),
+          IconButton(
+            icon: const Icon(Icons.person_add_alt_outlined),
+            tooltip: 'invite a device',
+            onPressed: _invite,
+          ),
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'refresh',
+            onPressed: _load,
+          ),
         ],
       ),
       body: SafeArea(
@@ -160,10 +173,10 @@ class _DevicesScreenState extends ConsumerState<DevicesScreen> {
             if (snapshot.hasError) {
               return Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(24),
                   child: Text(
                     snapshot.error.toString(),
-                    style: const TextStyle(color: KavachColors.danger, fontSize: 12),
+                    style: const TextStyle(color: KavachColors.danger),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -175,17 +188,17 @@ class _DevicesScreenState extends ConsumerState<DevicesScreen> {
                 child: Text(
                   'no devices found on the remote vault yet.\nsync at least once first.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: KavachColors.textSecondary, fontSize: 12),
+                  style: TextStyle(color: KavachColors.textSecondary),
                 ),
               );
             }
             return ListView.separated(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(16),
               itemCount: devices.length + (_error != null ? 1 : 0),
-              separatorBuilder: (_, _) => const SizedBox(height: 10),
+              separatorBuilder: (_, _) => const SizedBox(height: 12),
               itemBuilder: (context, index) {
                 if (_error != null && index == 0) {
-                  return Text(_error!, style: const TextStyle(color: KavachColors.danger, fontSize: 12));
+                  return Text(_error!, style: const TextStyle(color: KavachColors.danger));
                 }
                 final device = devices[index - (_error != null ? 1 : 0)];
                 return _DeviceTile(
@@ -217,27 +230,36 @@ class _DeviceTile extends StatelessWidget {
         children: [
           KavachIconCircle(
             icon: pending ? Icons.hourglass_top_outlined : Icons.check_circle_outline,
-            size: 36,
-            iconSize: 16,
+            size: 44,
+            iconSize: 20,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   device.platform,
-                  style: const TextStyle(color: KavachColors.textPrimary, fontWeight: FontWeight.w600, fontSize: 13),
+                  style: const TextStyle(
+                    color: KavachColors.textPrimary,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
                 ),
+                const SizedBox(height: 2),
                 Text(
                   '${device.deviceId} · ${device.status.name}',
-                  style: const TextStyle(color: KavachColors.textSecondary, fontSize: 10),
+                  style: const TextStyle(color: KavachColors.textSecondary, fontSize: 12),
                   overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
           ),
-          if (pending) KavachButton(label: busy ? '…' : 'approve', onTap: busy ? null : onApprove),
+          if (pending)
+            KavachButton(
+              label: busy ? '…' : 'approve',
+              onTap: busy ? null : onApprove,
+            ),
         ],
       ),
     );

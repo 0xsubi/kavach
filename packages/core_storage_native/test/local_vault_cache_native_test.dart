@@ -56,18 +56,15 @@ void main() {
     expect(all.single.version, 2);
   });
 
-  test('last synced commit sha round-trips', () async {
-    expect(await cache.lastSyncedCommitSha, isNull);
-    await cache.setLastSyncedCommitSha('abc123');
-    expect(await cache.lastSyncedCommitSha, 'abc123');
+  test('last synced revision round-trips, defaulting to 0', () async {
+    expect(await cache.lastSyncedRevision, 0);
+    await cache.setLastSyncedRevision(42);
+    expect(await cache.lastSyncedRevision, 42);
   });
 
-  test('blob sha cache round-trips as a map', () async {
-    expect(await cache.cachedBlobShas(), isEmpty);
-    await cache.setCachedBlobShas({'items/aa/aaa.json.enc': 'sha1', 'items/bb/bbb.json.enc': 'sha2'});
-    expect(await cache.cachedBlobShas(), {
-      'items/aa/aaa.json.enc': 'sha1',
-      'items/bb/bbb.json.enc': 'sha2',
-    });
+  test('cached item versions round-trip as a map', () async {
+    expect(await cache.cachedItemVersions(), isEmpty);
+    await cache.setCachedItemVersions({'aaa': 3, 'bbb': 1});
+    expect(await cache.cachedItemVersions(), {'aaa': 3, 'bbb': 1});
   });
 }

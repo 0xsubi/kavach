@@ -6,8 +6,12 @@ build/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
+# Libraries under packages/ leave their lockfile out; deployable apps pin
+# theirs. extension/flutter_popup is an app too — it just ships inside the
+# extension rather than living under apps/.
 pubspec.lock
 !apps/**/pubspec.lock
+!extension/flutter_popup/pubspec.lock
 *.g.dart
 *.freezed.dart
 packages/native/**/.build/
@@ -44,6 +48,11 @@ extension/flutter_popup/build/
 .idea/
 .vscode/
 *.iml
+
+# OS cruft
+# Was only ignored inside apps/*/ via the Flutter template's own .gitignore,
+# so one dropped at the repo root or under packages/ would have been staged.
+.DS_Store
 
 # Secrets
 *.env

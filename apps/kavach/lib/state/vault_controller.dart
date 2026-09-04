@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kavach_core/kavach_core.dart';
 
+import '../data/biometric_authenticator.dart';
 import '../data/vault_repository.dart';
 
 enum VaultStatus { loading, needsCreation, pendingApproval, locked, unlocked }
@@ -51,13 +52,13 @@ class VaultController extends StateNotifier<VaultState> {
 
   /// Now that sync targets a server we control (kavach-storage) rather than
   /// GitHub, polling for changes is cheap: `since_revision` makes an
-  /// unchanged poll a near-empty response, not a full-tree fetch. In
-  /// *addition* to the manual "sync now" action — not a replacement for it.
-  /// Only runs while unlocked (started in [_refreshUnlocked], stopped in
-  /// [lock]/[dispose]). Runs independently in whichever context this
-  /// controller is instantiated in — the offscreen document (auto-unlocked
-  /// for autofill) and the side panel popup each get their own timer, so
-  /// autofill data stays fresh even when the popup itself is closed.
+  /// unchanged poll a near-empty response, not a full-tree fetch. This is
+  /// in *addition* to the manual "sync now" button and the existing
+  /// start/foreground triggers below, not a replacement for them — it just
+  /// means another device's edit shows up without the user having to do
+  /// anything. Only runs while unlocked (started in [_refreshUnlocked],
+  /// stopped in [lock]/[dispose]): syncing while locked has no vault key to
+  /// decrypt with.
   static const _pollInterval = Duration(seconds: 10);
   Timer? _pollTimer;
 
@@ -86,6 +87,8 @@ class VaultController extends StateNotifier<VaultState> {
     state = VaultState(status: hasKey ? VaultStatus.locked : VaultStatus.pendingApproval);
   }
 
+  /// Registers this device against an existing vault and waits for an
+  /// already-approved device to approve it (plan §5).
   Future<void> joinExistingVault({
     required String baseUrl,
     required String vaultId,
@@ -100,6 +103,8 @@ class VaultController extends StateNotifier<VaultState> {
     }
   }
 
+  /// Checks whether another device has approved this one yet; unlocks
+  /// immediately (and kicks off an auto-sync) if so.
   Future<bool> checkJoinApproval() async {
     final approved = await _repo.checkJoinApproval();
     if (approved) {
@@ -123,6 +128,15 @@ class VaultController extends StateNotifier<VaultState> {
     await _refreshUnlocked();
   }
 
+  Future<bool> unlock() async {
+    final ok = await _repo.unlock();
+    if (ok) {
+      await _refreshUnlocked();
+      unawaited(syncIfConfigured());
+    }
+    return ok;
+  }
+
   Future<bool> unlockWithMasterPassword(String masterPassword) async {
     final ok = await _repo.unlockWithMasterPassword(masterPassword);
     if (ok) {
@@ -132,19 +146,9 @@ class VaultController extends StateNotifier<VaultState> {
     return ok;
   }
 
-  /// Tries the locally-cached vault key first (no master password needed —
-  /// browsers have no biometric-gate equivalent, so this is the closest
-  /// thing to "quick unlock" the popup has); the caller falls back to a
-  /// master-password prompt if this returns false.
-  Future<bool> tryQuickUnlock() async {
-    final ok = await _repo.unlock();
-    if (ok) {
-      await _refreshUnlocked();
-      unawaited(syncIfConfigured());
-    }
-    return ok;
-  }
-
+  /// Drives both auto-sync-on-unlock and background/foreground sync
+  /// triggers (plan §10 phase 3) with one code path. No-ops if kavach-storage
+  /// isn't configured yet, or if a sync is already in flight.
   Future<void> syncIfConfigured() async {
     if (state.isSyncing) return;
     if (await _repo.hasStorageConfigured()) {
@@ -174,7 +178,14 @@ class VaultController extends StateNotifier<VaultState> {
     List<String> uris = const [],
     String notes = '',
   }) async {
-    await _repo.savePasswordItem(id: id, name: name, username: username, password: password, uris: uris, notes: notes);
+    await _repo.savePasswordItem(
+      id: id,
+      name: name,
+      username: username,
+      password: password,
+      uris: uris,
+      notes: notes,
+    );
     await _refreshUnlocked();
   }
 
@@ -208,4 +219,11 @@ final vaultRepositoryProvider = Provider<VaultRepository>((ref) {
 
 final vaultControllerProvider = StateNotifierProvider<VaultController, VaultState>(
   (ref) => VaultController(ref.watch(vaultRepositoryProvider)),
+);
+
+/// Overridden with a fake in integration tests — the real implementation
+/// shows a system Touch ID/password dialog that would otherwise block
+/// automated `flutter test -d macos` runs.
+final biometricAuthenticatorProvider = Provider<BiometricAuthenticator>(
+  (ref) => LocalAuthBiometricAuthenticator(),
 );

@@ -23,9 +23,11 @@ class Items extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-/// Small key/value table for sync bookkeeping: `last_synced_commit_sha` and
-/// `blob_shas` (a JSON map of repo path -> blob sha, used by [SyncEngine] to
-/// diff the remote tree without re-downloading unchanged files).
+/// Small key/value table for sync bookkeeping: `last_synced_revision` (the
+/// kavach-storage revision counter [SyncEngine] passes as `since_revision`
+/// on its next pull) and `item_versions` (a JSON map of item id -> that
+/// item's last-known server row version, the optimistic-concurrency
+/// baseline for the next write).
 class KeyValues extends Table {
   TextColumn get key => text()();
   TextColumn get value => text()();

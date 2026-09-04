@@ -39,17 +39,17 @@ void main() {
     expect(await cache.dirtyItems(), isEmpty);
   });
 
-  test('lastSyncedCommitSha round-trips', () async {
+  test('lastSyncedRevision round-trips, defaulting to 0', () async {
     final cache = await LocalVaultCacheWeb.open();
-    expect(await cache.lastSyncedCommitSha, isNull);
-    await cache.setLastSyncedCommitSha('abc123');
-    expect(await cache.lastSyncedCommitSha, 'abc123');
+    expect(await cache.lastSyncedRevision, 0);
+    await cache.setLastSyncedRevision(42);
+    expect(await cache.lastSyncedRevision, 42);
   });
 
-  test('cachedBlobShas round-trips', () async {
+  test('cachedItemVersions round-trips', () async {
     final cache = await LocalVaultCacheWeb.open();
-    expect(await cache.cachedBlobShas(), isEmpty);
-    await cache.setCachedBlobShas({'items/01/x.json.enc': 'sha-1', 'items/02/y.json.enc': 'sha-2'});
-    expect(await cache.cachedBlobShas(), {'items/01/x.json.enc': 'sha-1', 'items/02/y.json.enc': 'sha-2'});
+    expect(await cache.cachedItemVersions(), isEmpty);
+    await cache.setCachedItemVersions({'a': 3, 'b': 1});
+    expect(await cache.cachedItemVersions(), {'a': 3, 'b': 1});
   });
 }

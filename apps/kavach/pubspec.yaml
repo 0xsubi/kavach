@@ -1,0 +1,35 @@
+name: kavach
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.13.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  kavach_core:
+    path: ../../packages/core
+  kavach_core_storage_native:
+    path: ../../packages/core_storage_native
+  neopop_theme:
+    path: ../../packages/neopop_theme
+  sodium_libs: ^3.4.4
+  sodium: ^3.4.4
+  flutter_riverpod: ^2.6.1
+  uuid: ^4.5.1
+  http: ^1.2.2
+  local_auth: ^2.3.0
+  app_links: ^7.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  drift: ^2.22.1
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
