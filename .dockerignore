@@ -1,0 +1,25 @@
+# Keeps the build context (repo root — apps/web/Dockerfile needs sibling
+# packages/* directories, so it can't build from apps/web alone) lean and
+# avoids ever baking a stale local build/ into an image layer.
+
+.git/
+.dart_tool/
+build/
+.pub-cache/
+.pub/
+node_modules/
+extension/**/dist/
+
+**/ios/Pods/
+**/ios/.symlinks/
+**/macos/Pods/
+**/macos/Flutter/ephemeral/
+**/android/.gradle/
+
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+*.env
+.env.*

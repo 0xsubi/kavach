@@ -67,11 +67,30 @@ class DeviceInviteUri {
         : (uri.pathSegments.isNotEmpty ? uri.pathSegments.first : '');
     if (target.toLowerCase() != host) return null;
 
-    if (uri.queryParameters[_versionParam] != '$formatVersion') return null;
+    return tryParseQueryParameters(uri.queryParameters);
+  }
 
-    final baseUrl = uri.queryParameters[_baseUrlParam]?.trim() ?? '';
-    final vaultId = uri.queryParameters[_vaultIdParam]?.trim() ?? '';
-    final token = uri.queryParameters[_tokenParam]?.trim() ?? '';
+  /// Convenience for the raw-string case (camera payloads, `getInitialLink`).
+  static DeviceInviteUri? tryParseString(String value) {
+    final uri = Uri.tryParse(value.trim());
+    return uri == null ? null : tryParse(uri);
+  }
+
+  /// The field-extraction half of [tryParse], split out for `apps/web`:
+  /// a website has no custom scheme to register, so the same invite
+  /// travels as an ordinary `https://<its own origin>/join?…` link
+  /// instead of `kavach://join?…` — the scheme and host are already
+  /// meaningless there (same-origin HTTPS is the whole point), only the
+  /// query parameters carry the payload. Kept in sync with [tryParse] by
+  /// construction: both funnel through this one validator, so a native
+  /// deep link and a web link can never silently accept different shapes
+  /// of the same field.
+  static DeviceInviteUri? tryParseQueryParameters(Map<String, String> queryParameters) {
+    if (queryParameters[_versionParam] != '$formatVersion') return null;
+
+    final baseUrl = queryParameters[_baseUrlParam]?.trim() ?? '';
+    final vaultId = queryParameters[_vaultIdParam]?.trim() ?? '';
+    final token = queryParameters[_tokenParam]?.trim() ?? '';
     if (baseUrl.isEmpty || vaultId.isEmpty || token.isEmpty) return null;
 
     // The joining device is about to register itself against whatever
@@ -90,12 +109,6 @@ class DeviceInviteUri {
       vaultId: vaultId,
       inviteToken: token,
     );
-  }
-
-  /// Convenience for the raw-string case (camera payloads, `getInitialLink`).
-  static DeviceInviteUri? tryParseString(String value) {
-    final uri = Uri.tryParse(value.trim());
-    return uri == null ? null : tryParse(uri);
   }
 
   @override

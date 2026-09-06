@@ -1,0 +1,9 @@
+services:
+  kavach-web:
+    build:
+      # Repo root — see the comment at the top of Dockerfile for why.
+      context: ../..
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - "8081:80"
+    restart: unless-stopped

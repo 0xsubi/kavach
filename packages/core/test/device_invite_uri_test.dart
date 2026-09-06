@@ -132,6 +132,27 @@ void main() {
     });
   });
 
+  group('tryParseQueryParameters (apps/web\'s plain-https join link)', () {
+    test('accepts the same fields tryParse would, with no scheme/host to check', () {
+      final parsed = DeviceInviteUri.tryParseQueryParameters({
+        'v': '1',
+        'url': invite.baseUrl,
+        'vault': invite.vaultId,
+        'token': invite.inviteToken,
+      });
+      expect(parsed, invite);
+    });
+
+    test('rejects the same malformed shapes tryParse rejects', () {
+      expect(DeviceInviteUri.tryParseQueryParameters({}), isNull);
+      expect(DeviceInviteUri.tryParseQueryParameters({'v': '2', 'url': invite.baseUrl, 'vault': 'v', 'token': 't'}), isNull);
+      expect(
+        DeviceInviteUri.tryParseQueryParameters({'v': '1', 'url': 'javascript:alert(1)', 'vault': 'v', 'token': 't'}),
+        isNull,
+      );
+    });
+  });
+
   group('tryParse accepts', () {
     test('plain http for a LAN / self-hosted server', () {
       final parsed = DeviceInviteUri.tryParseString(
