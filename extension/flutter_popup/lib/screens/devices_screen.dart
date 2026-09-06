@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kavach_core/kavach_core.dart';
 import 'package:neopop_theme/neopop_theme.dart';
@@ -44,6 +45,98 @@ class _DevicesScreenState extends ConsumerState<DevicesScreen> {
     }
   }
 
+  Future<void> _invite() async {
+    final notifier = ref.read(vaultControllerProvider.notifier);
+    try {
+      final target = await notifier.storageTarget();
+      final invite = await notifier.createDeviceInvite();
+      if (!mounted || target == null) return;
+      final inviteLink = DeviceInviteUri(
+        baseUrl: target.baseUrl,
+        vaultId: target.vaultId,
+        inviteToken: invite.inviteToken,
+      ).encode();
+      await showDialog<void>(
+        context: context,
+        builder: (context) => AlertDialog(
+          backgroundColor: KavachColors.surface,
+          insetPadding: const EdgeInsets.all(12),
+          title: const Text('invite a device', style: TextStyle(color: KavachColors.textPrimary, fontSize: 15)),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'point the new device\'s camera at this code — it opens Kavach '
+                  'with the details filled in. expires in 15 minutes, works once.',
+                  style: TextStyle(color: KavachColors.textSecondary, fontSize: 11),
+                ),
+                const SizedBox(height: 12),
+                Center(
+                  child: KavachQrCode(
+                    data: inviteLink,
+                    size: 168,
+                    semanticLabel: 'device invite QR code',
+                  ),
+                ),
+                const SizedBox(height: 12),
+                const Row(
+                  children: [
+                    Expanded(child: Divider(color: KavachColors.border)),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 6),
+                      child: Text(
+                        'or type them in',
+                        style: TextStyle(color: KavachColors.textSecondary, fontSize: 10),
+                      ),
+                    ),
+                    Expanded(child: Divider(color: KavachColors.border)),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                _copyableField('server url', target.baseUrl),
+                const SizedBox(height: 8),
+                _copyableField('vault id', target.vaultId),
+                const SizedBox(height: 8),
+                _copyableField('invite token', invite.inviteToken),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Clipboard.setData(ClipboardData(text: inviteLink)),
+              child: const Text('copy link'),
+            ),
+            TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('done')),
+          ],
+        ),
+      );
+    } catch (e) {
+      setState(() => _error = e.toString());
+    }
+  }
+
+  Widget _copyableField(String label, String value) {
+    return InkWell(
+      onTap: () => Clipboard.setData(ClipboardData(text: value)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label, style: const TextStyle(color: KavachColors.textSecondary, fontSize: 10)),
+          Row(
+            children: [
+              Expanded(
+                child: SelectableText(value, style: const TextStyle(color: KavachColors.textPrimary, fontSize: 12)),
+              ),
+              const Icon(Icons.copy, size: 14, color: KavachColors.textSecondary),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +145,10 @@ class _DevicesScreenState extends ConsumerState<DevicesScreen> {
         backgroundColor: KavachColors.background,
         iconTheme: const IconThemeData(color: KavachColors.textPrimary),
         title: const Text('devices', style: TextStyle(color: KavachColors.textPrimary, fontSize: 16)),
-        actions: [IconButton(icon: const Icon(Icons.refresh), tooltip: 'refresh', onPressed: _load)],
+        actions: [
+          IconButton(icon: const Icon(Icons.person_add_alt_outlined), tooltip: 'invite a device', onPressed: _invite),
+          IconButton(icon: const Icon(Icons.refresh), tooltip: 'refresh', onPressed: _load),
+        ],
       ),
       body: SafeArea(
         child: FutureBuilder<List<DeviceRecord>>(

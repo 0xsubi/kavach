@@ -5,8 +5,8 @@ import 'package:kavach_core/kavach_core.dart';
 
 import 'vault_database.dart';
 
-const String _lastSyncedCommitShaKey = 'last_synced_commit_sha';
-const String _blobShasKey = 'blob_shas';
+const String _lastSyncedRevisionKey = 'last_synced_revision';
+const String _itemVersionsKey = 'item_versions';
 
 /// [LocalVaultCache] backed by a drift (SQLite) database (plan §9).
 class LocalVaultCacheNative implements LocalVaultCache {
@@ -15,11 +15,13 @@ class LocalVaultCacheNative implements LocalVaultCache {
   final VaultDatabase _db;
 
   @override
-  Future<String?> get lastSyncedCommitSha => _readKeyValue(_lastSyncedCommitShaKey);
+  Future<int> get lastSyncedRevision async {
+    final raw = await _readKeyValue(_lastSyncedRevisionKey);
+    return raw == null ? 0 : int.parse(raw);
+  }
 
   @override
-  Future<void> setLastSyncedCommitSha(String sha) =>
-      _writeKeyValue(_lastSyncedCommitShaKey, sha);
+  Future<void> setLastSyncedRevision(int revision) => _writeKeyValue(_lastSyncedRevisionKey, '$revision');
 
   @override
   Future<List<VaultItem>> allItems() async {
@@ -62,15 +64,15 @@ class LocalVaultCacheNative implements LocalVaultCache {
   }
 
   @override
-  Future<Map<String, String>> cachedBlobShas() async {
-    final raw = await _readKeyValue(_blobShasKey);
+  Future<Map<String, int>> cachedItemVersions() async {
+    final raw = await _readKeyValue(_itemVersionsKey);
     if (raw == null) return {};
-    return (jsonDecode(raw) as Map<String, dynamic>).cast<String, String>();
+    return (jsonDecode(raw) as Map<String, dynamic>).map((k, v) => MapEntry(k, v as int));
   }
 
   @override
-  Future<void> setCachedBlobShas(Map<String, String> shaByPath) =>
-      _writeKeyValue(_blobShasKey, jsonEncode(shaByPath));
+  Future<void> setCachedItemVersions(Map<String, int> versionById) =>
+      _writeKeyValue(_itemVersionsKey, jsonEncode(versionById));
 
   VaultItem _toVaultItem(Item row) =>
       VaultItem.fromJson(jsonDecode(row.dataJson) as Map<String, dynamic>);

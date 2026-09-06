@@ -1,0 +1,31 @@
+name: kavach_web
+description: "Kavach's standalone web vault — full vault UI in any browser, no extension or app install required."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.13.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  kavach_core:
+    path: ../../packages/core
+  kavach_core_storage_web:
+    path: ../../packages/core_storage_web
+  neopop_theme:
+    path: ../../packages/neopop_theme
+  flutter_riverpod: ^2.6.1
+  sodium: ^3.4.4
+  sodium_libs: ^3.4.5
+  uuid: ^4.5.1
+  http: ^1.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

@@ -93,12 +93,12 @@ class LocalVaultCacheWeb implements LocalVaultCache {
   }
 
   @override
-  Future<String?> get lastSyncedCommitSha async => (await _readState())['lastSyncedCommitSha'] as String?;
+  Future<int> get lastSyncedRevision async => (await _readState())['lastSyncedRevision'] as int? ?? 0;
 
   @override
-  Future<void> setLastSyncedCommitSha(String sha) async {
+  Future<void> setLastSyncedRevision(int revision) async {
     final state = await _readState();
-    state['lastSyncedCommitSha'] = sha;
+    state['lastSyncedRevision'] = revision;
     await _writeState(state);
   }
 
@@ -147,15 +147,15 @@ class LocalVaultCacheWeb implements LocalVaultCache {
   }
 
   @override
-  Future<Map<String, String>> cachedBlobShas() async {
-    final shas = (await _readState())['blobShas'] as Map<String, dynamic>? ?? {};
-    return shas.map((k, v) => MapEntry(k, v as String));
+  Future<Map<String, int>> cachedItemVersions() async {
+    final versions = (await _readState())['itemVersions'] as Map<String, dynamic>? ?? {};
+    return versions.map((k, v) => MapEntry(k, v as int));
   }
 
   @override
-  Future<void> setCachedBlobShas(Map<String, String> shaByPath) async {
+  Future<void> setCachedItemVersions(Map<String, int> versionById) async {
     final state = await _readState();
-    state['blobShas'] = shaByPath;
+    state['itemVersions'] = versionById;
     await _writeState(state);
   }
 }
